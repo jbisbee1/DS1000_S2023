@@ -202,9 +202,10 @@ This is plain text.
 ---
 
 # How to type in `.Rmd`
-````{verbatim, lang = "markdown"}
+
+```{verbatim, lang = "markdown"}
 **Bold font**, *italic font*, `code font`
-````
+```
 --
 
 **Bold font**, *italic font*, `code font`
@@ -213,7 +214,7 @@ This is plain text.
 
 - Most Importantly! `R` code!
 
-````{verbatim, lang = "markdown"}
+````{verbatim,lang = "markdown"}
 ```{r}
 2+2
 ```
@@ -260,6 +261,19 @@ This is plain text.
 
 ```{r}
 object1 <- 2+2
+```
+
+--
+
+- Object assignment operator **saves** the output
+
+- It **does not print** the output
+
+--
+
+- To see, just call the object
+
+```{r}
 object1
 ```
 
@@ -317,6 +331,18 @@ an_element-a_vector
 
 ---
 
+# A comment on comments
+
+- If you use a # sign inside a code chunk, you can write a comment
+
+```{r}
+# This is a comment. If I compile the code, nothing will happen.
+
+# This is another comment. These are helpful for annotating my code.
+```
+
+---
+
 # How `R` Works
 
 - Objects **persist!**
@@ -340,9 +366,10 @@ a_function(x = a_list[['element3']])
 
 --
 
-- We could also call `element3` from `a_list` with a \$ sign
+- We could also call `element3` from `a_list` with a dollar sign
 
 ```{r}
+# This does the same thing as the previous slide...it just accesses element3 differently.
 a_function(x = a_list$element3)
 ```
 
@@ -404,6 +431,28 @@ a_function(x = a_list$element3)
 
   - **We can even do this with single objects!**
   
+---
+
+# Give it a try
+
+- Comment **everything**
+
+--
+
+- Create two objects
+
+  - `a` contains the product of 3 and 5 (`3*5`)
+  
+  - `b` contains five numbers `c(10,21,43,87,175)`
+  
+--
+
+- Now create object `c` which is `a - b`
+
+```{r}
+# INSERT CODE HERE
+```
+
 ---
 
 # Functions & Packages
@@ -578,6 +627,14 @@ df<-readRDS("../data/sc_debt.Rds")
 
 --
 
+  - This is a "tabular data frame", aka a `tibble`
+  
+  - **Rows** are observations
+  
+  - **Columns** are values
+
+--
+
 - We can look at this object directly
 
 ```{r}
@@ -652,9 +709,54 @@ defs %>%
 
   - Which schools produce the richest grads?
   
+--
+
+- There are `tidyverse` functions to answer all of these questions
+
+---
+
+# Manipulating with `tidyverse`
+
+- The code process of `tidyverse` relies on a "pipe" symbol: `%>%`
+
+--
+
+  - I don't like this name
+  
+  - I think it should be called a "chain" because it **links code together**
+  
+  - Or maybe a "do" symbol because it tells `R` what to do
+  
+--
+
+- The basic grammar of `R` is: object, `%>%`, verb
+
+```{r,eval=FALSE}
+object %>%  # This is the object
+   function() # This is the verb
+```
+
+---
+
+# Manipulating with `tidyverse`
+
+- `tidyverse` has many useful "verbs" (i.e., functions)
+
+  - `filter()`: subsets **rows**
+  
+  - `select()`: subsets **columns**
+  
+  - `arrange()`: sorts **rows** based on **columns**
+  
+  - `summarise()`: collapses **rows**
+  
+  - `group_by()`: groups **rows** by **columns**
+  
 ---
 
 # Manipulating: `filter()`
+
+- So let's look at Vandy
 
 --
 
@@ -664,7 +766,7 @@ defs %>%
 
 ```{r}
 df %>%
-  filter(instnm == "Vanderbilt University")
+  filter(instnm == "Vanderbilt University") # Only select rows with Vandy
 ```
 
 ---
@@ -675,19 +777,31 @@ df %>%
 
 --
 
+- I only care about the admissions rate (`adm_rate`), the SAT scores (`sat_avg`), and the future earnings (`md_earn_wne_p6`)
+
+--
+
 - `select` will select **columns**
 
 ```{r}
 df %>%
   filter(instnm == "Vanderbilt University") %>%
-  select(instnm,adm_rate,selective,sat_avg,md_earn_wne_p6)
+  select(instnm,adm_rate,sat_avg,md_earn_wne_p6) # Only select four columns
 ```
 
 ---
 
 # Manipulating: `arrange()`
 
-- How does Vandy compare?
+- How does Vandy compare...?
+
+--
+
+  - to other schools in terms of SAT scores?
+  
+  - to other schools in terms of future earnings?
+  
+  - to other schools in terms of admissions rates?
 
 --
 
@@ -695,9 +809,47 @@ df %>%
 
 ```{r}
 df %>%
-  filter(adm_rate < .1) %>%
-  arrange(sat_avg,adm_rate) %>%
-  select(instnm,adm_rate,sat_avg)
+  arrange(sat_avg) %>% # Sort data by SAT scores
+  select(instnm,sat_avg) # Only look at name and SAT scores
+```
+
+---
+
+# Manipulating: `arrange()`
+
+- Vandy is not in the bottom 10 schools
+
+```{r}
+df %>%
+  arrange(sat_avg) %>% # Sort data by SAT scores
+  select(instnm,sat_avg) # Only look at name and SAT scores
+```
+
+---
+
+# Manipulating: `arrange()`
+
+- Use `desc()` to order in descending values...Vandy not in top 10 either
+
+```{r}
+df %>%
+  arrange(desc(sat_avg)) %>% # Sort data by SAT scores (descending)
+  select(instnm,sat_avg) # Only look at name and SAT scores
+```
+
+---
+
+# Manipulating: `arrange()`
+
+- What if we look only at "selective" schools (i.e., those who accept less than 10% of applicants)?
+
+--
+
+```{r}
+df %>%
+  filter(adm_rate < .1) %>% # Only look at schools who accept less than 10%
+  arrange(sat_avg,adm_rate) %>% # Sort data by SAT scores AND THEN admissions rates (breaks ties)
+  select(instnm,adm_rate,sat_avg) # Only look at name, admissions rate, and SAT scores
 ```
 
 
@@ -712,7 +864,7 @@ df %>%
 ```{r}
 df %>%
   filter(adm_rate < .1) %>%
-  arrange(-sat_avg,adm_rate) %>%
+  arrange(desc(sat_avg),adm_rate) %>%
   select(instnm,adm_rate,sat_avg)
 ```
 
@@ -728,9 +880,9 @@ df %>%
 
 ```{r}
 df %>%
-  filter(adm_rate > .2 & adm_rate < .3) %>%
-  arrange(stabbr,-sat_avg) %>%
-  select(instnm,sat_avg,grad_debt_mdn,stabbr)
+  filter(adm_rate > .2 & adm_rate < .3) %>% # Less selective schools (accept between 20% and 30%)
+  arrange(stabbr,desc(sat_avg)) %>% # Sort by state name, then by SAT scores
+  select(instnm,sat_avg,grad_debt_mdn,stabbr) # Only look at some columns
 ```
 
 ---
@@ -746,6 +898,12 @@ df %>%
   - `NA` is the standard code for **missing data** in `R`
   
   - Data can be missing for many different reasons (i.e., some schools don't require SAT scores or record them)
+  
+  - We can use a base `R` function called `is.na()` which will be `TRUE` if the value is `NA` or `FALSE` otherwise
+  
+--
+
+  - And we can combine `is.na()` with the `filter()` function from `tidyverse`
 
 --
 
@@ -753,10 +911,12 @@ df %>%
   
 --
 
+- For now, how many schools don't report SAT scores?
+
 ```{r}
 df %>%
-  filter(is.na(sat_avg)) %>%
-  select(instnm,stabbr)
+  filter(is.na(sat_avg)) %>% # Only look at schools that DON'T report SATs
+  select(instnm,stabbr) # Only look at the name and the state
 ```
 
 
@@ -773,6 +933,30 @@ df %>%
 - Not a lot of .blue[science]
 
 --
+
+- But remember the .blue[Research] camp!
+
+--
+
+  1. .red[Observation] &rarr; .blue[Question]
+
+  2. .blue[Theory] &rarr; .blue[Hypothesis]
+
+  3. .red[Data Collection / Wrangling] &rarr; .red[Analysis]
+
+  4. .red[Results] &rarr; .blue[Conclusion]
+  
+--
+
+- We have been doing lots of .red[Observation]!
+
+--
+
+- Do we have any good .blue[Research questions]?
+
+---
+
+# Stepping back
 
 - .blue[RQ]: How might admissions and SAT scores be **related**?
 
@@ -807,7 +991,7 @@ df %>%
 
 ```{r}
 df %>%
-  summarise(mean_sat = mean(sat_avg,na.rm=T))
+  summarise(mean_sat = mean(sat_avg,na.rm=T)) # Average SAT scores for entire data
 ```
 
 ---
@@ -850,14 +1034,14 @@ df %>%
 
 ```{r,eval=T}
 df %>%
-  filter(adm_rate < .1) %>%
-  summarise(mean_sat_LT10 = mean(sat_avg,na.rm=T))
+  filter(adm_rate < .1) %>% # Only look at schools who accept less than 10% of applicants
+  summarise(mean_sat_LT10 = mean(sat_avg,na.rm=T)) # Calculate the average SAT score
 ```
 
 ```{r,eval=T}
 df %>%
-  filter(adm_rate > .1 & adm_rate < .2) %>%
-  summarise(mean_sat_1020 = mean(sat_avg,na.rm=T))
+  filter(adm_rate > .1) %>% # Only look at schools who accept more than 10% of applicants
+  summarise(mean_sat_GT20 = mean(sat_avg,na.rm=T)) # Calculate the average SAT score
 ```
 
 ---
@@ -870,11 +1054,48 @@ df %>%
 
 --
 
+- There is a column called `selective` which is either 1 or 0
+
+--
+
+  - 1: the admissions rate is less than 10%
+  
+  - 0: otherwise
+  
+--
+
+```{r}
+df %>%
+  select(instnm,selective,adm_rate)
+```
+
+---
+
+# Summarizing Data: `group_by()`
+
+- Instead of running two separate `filter()` commands, use `group_by()`
+
+--
+
 ```{r,eval=T}
 df %>%
-  group_by(selective) %>%
-  summarise(mean_sat = mean(sat_avg,na.rm=T))
+  group_by(selective) %>% # Group the data by selective (either 1 or 0)
+  summarise(mean_sat = mean(sat_avg,na.rm=T)) # Calculate average SAT for each group
 ```
+
+---
+
+# Results
+
+- Do more selective schools have higher SAT scores?
+
+--
+
+- Yes
+
+--
+
+- This .red[Result] **confirms** our .blue[Hypothesis] and **answers** our .blue[Research Question]
 
 ---
 
