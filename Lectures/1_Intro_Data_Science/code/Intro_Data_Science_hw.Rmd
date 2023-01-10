@@ -97,7 +97,7 @@ To run the code below in R, you can:
 
 ```{r, message=FALSE}
 ## Get necessary libraries-- won't work the first time, because you need to install them!
-# install.packages(tidyverse)  # Uncomment this to install
+# install.packages("tidyverse")  # Uncomment this to install
 library(tidyverse)
 ```
 
