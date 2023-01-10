@@ -49,10 +49,27 @@ In each class, we're going to include some code and text in one file, and data i
 
  We're going to grab some data that's part of the [college scorecard](https://collegescorecard.ed.gov/data/documentation/) and do a bit of analysis on it.
 
-## .Rmd files
+## .Rmd Set Up
 
-Open the `Intro_Data_Science_hw.Rmd` file. In RStudio, go to File--\>Open, then find the `Intro_Data_Science_hw.Rmd`  file in the directory.
+Open `RStudio`, then create a new `.Rmd` file. To do this, click on `File` &rarr; `New File` &rarr; `R Markdown...`.
 
+<center><img src="figs/create_rmd.png" width = 70%></center>
+
+You will then be asked to determine a bunch of settings for this `.Rmd` document. For example, you can choose whether you want to create a "Document", "Presentation", "Shiny", or "From Template" on the left. You can set the "Title:" "Author:" and "Date:" on the top-right. And you can choose the "Default Output Format:" to be either "HTML", "PDF", or "Word". You should **not change any of these settings**. Their defaults ("Document", "Untitled", "[Your name]", "[Today's Date]", and "HTML") are sufficient. Just click "OK".
+
+<center><img src="figs/create_rmd_2.png" width = 70%></center>
+
+Copy the raw code from the [`Intro_Data_Science_hw.Rmd`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/1_Intro_Data_Science/code/Intro_Data_Science_hw.Rmd) file by clicking on the copy button as shown in the image below.
+
+<center><img src="figs/copy_raw.png" width = 70%></center>
+
+Finally, replace the default code in your R Markdown file with the copied code from the GitHub!
+
+If viewing this as an html file, you can view this gif for more help!
+
+<center><img src="rmarkdown_example.gif" width = 70%></center>
+
+## .Rmd Files
 .Rmd files will be the only file format we work in this class. .Rmd files contain three basic elements:
 
 1.  Script that can be interpreted by R.
@@ -76,7 +93,7 @@ To run the code below in R, you can:
 
 -   Press the "play" button next to the code chunk
 -   In OS X, place the cursor in the code chunk and hit `CMD+RETURN`
--   In Windows, place the cursor in the code chunk and hit `CTRIL+RETURN`
+-   In Windows, place the cursor in the code chunk and hit `CTRL+RETURN`
 
 ```{r, message=FALSE}
 ## Get necessary libraries-- won't work the first time, because you need to install them!
