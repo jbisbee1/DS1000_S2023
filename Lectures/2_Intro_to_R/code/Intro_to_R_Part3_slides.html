@@ -4,7 +4,7 @@
     <title>Intro to R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -27,7 +27,7 @@ class: center, middle, inverse, title-slide
 ]
 .date[
 ### Lecture Date: 2023/01/23
-Slides Updated: 2023-01-18
+Slides Updated: 2023-01-22
 ]
 
 ---
@@ -421,45 +421,6 @@ df %&gt;%
 --
 
   - ...the `%&gt;%` in `tidyverse`!
-  
---
-
-  - We can force aesthetics by setting code outside the `aes()`
-  
---
-
-
-```r
-df %&gt;%
-  ggplot(aes(x = adm_rate_pct,y = sat_avg)) + 
-* geom_point(color = 'red')
-```
-
----
-
-# Plotting data
-
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-# Plotting data
-
-- Or we can make more aesthetics dependent on the data
-
-
-```r
-df %&gt;%
-  ggplot(aes(x = adm_rate,y = sat_avg,
-*            color = stabbr)) +
-  geom_point()
-```
-
----
-
-# Plotting data
-
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -487,56 +448,117 @@ df %&gt;%
 
 ---
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
-
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Plotting data
+# The .blue[Research] Camp
 
-- Which school is most selective but also with the lowest SAT?
+- .blue[RQ]: How might future earnings and SAT scores be **related**?
 
 --
 
-  - This is an **outlier**
+  - .blue[Theory]: SATs measure student ability.
+  
+  - .blue[Theory]: Student ability is valued by the labor market.
+  
+  - .blue[Theory]: Firms pay more for students with higher SAT scores.
   
 --
 
-  - This school is the **furthest** from our .blue[theory]
+  - .blue[Hypothesis]: Earnings and SAT scores should be **positively** related
+  
+---
+
+# Plotting Quiz
+
+- Which variable goes on the x-axis?
+
+--
+
+  - **SAT scores**
+  
+--
+
+- Which variable goes on the y-axis?
+
+  - **Earnings**
+  
+--
+
+- In our theory, SAT scores **cause** earnings
+
+--
+
+- Why might this **not** be the case?
+
+--
+
+  - Spurious 1: SAT scores **and** earnings are caused by student ability
+  
+  - Spurious 2: SAT scores **and** earnings are caused by socio-economic privilege
+  
+---
+
+# Let's Plot!
+
+
+```r
+df %&gt;%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + # Build axes
+  geom_point() +  # Add points
+  geom_smooth(method = 'lm',se = F) # Add line of best fit
+```
+
+---
+
+# Outliers
+
+- Which schools are furthest from the line?
+
+--
+
+  - These are **outliers**
+  
+--
+
+  - These schools are the **furthest** from our .blue[theory]
 
 --
 
 
 ```r
 df %&gt;%
-  mutate(out = ifelse(adm_rate &lt; .25 &amp; sat_avg &lt; 1000,
+  mutate(out = ifelse(md_earn_wne_p6 &gt; 100000,
                           instnm,  # Value if TRUE
                           NA)) %&gt;% # Value if FALSE
-  filter(!is.na(out)) %&gt;%
-  select(instnm,adm_rate,sat_avg)
+  drop_na(out,sat_avg) %&gt;%
+  select(instnm,md_earn_wne_p6,sat_avg)
 ```
 
 ```
-## # A tibble: 1 × 3
-##   instnm                   adm_rate sat_avg
-##   &lt;chr&gt;                       &lt;dbl&gt;   &lt;int&gt;
-## 1 Dallas Christian College    0.130     917
+## # A tibble: 2 × 3
+##   instnm                                     md_ea…¹ sat_avg
+##   &lt;chr&gt;                                        &lt;int&gt;   &lt;int&gt;
+## 1 University of Health Sciences and Pharmac…  120400    1262
+## 2 Albany College of Pharmacy and Health Sci…  112100    1242
+## # … with abbreviated variable name ¹​md_earn_wne_p6
 ```
 
 ---
 
 # Plotting data
 
-- We can add this as a label!
+- We can add these as labels!
 
 
 ```r
 df %&gt;%
-  mutate(out = ifelse(adm_rate &lt; .25 &amp; sat_avg &lt; 1000,
-                      instnm,
-                      NA)) %&gt;%
-  ggplot(aes(x = adm_rate,y = sat_avg,
+   mutate(out = ifelse(md_earn_wne_p6 &gt; 100000,
+                          instnm,  # Value if TRUE
+                          NA)) %&gt;% # Value if FALSE
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6,
 *            label = out)) +
   geom_point() + 
 * geom_text()
@@ -546,7 +568,7 @@ df %&gt;%
 
 # Plotting data
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -556,36 +578,35 @@ df %&gt;%
 
 
 ```r
-df %&gt;%
-  mutate(out = ifelse(adm_rate &lt; .25 &amp; sat_avg &lt; 1000,
-                      instnm,
-                      NA)) %&gt;%
-  ggplot(aes(x = adm_rate,y = sat_avg,
-*            color = out,label = out)) +
+p &lt;- df %&gt;%
+   mutate(out = ifelse(md_earn_wne_p6 &gt; 100000,
+                          instnm,  # Value if TRUE
+                          NA)) %&gt;% # Value if FALSE
+  drop_na(sat_avg) %&gt;%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6,
+*            label = out,color = out)) +
   geom_point() + 
-* scale_color_manual(name = "Outlier",values = c('red','black')) +
-  geom_text(hjust = 0,vjust = 1,color = 'black',size = 3)
+* scale_color_manual(name = "Outlier",values = c('red','red','black')) +
+  geom_text(hjust = .5,vjust = 1,color = 'black',size = 3)
 ```
 
 ---
 
 # Plotting data
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+
 
 ---
 
 # Categorical Data
 
-- Thus far, we have used two continuous variables: `adm_rate` and `sat_avg`
+- Thus far, plotting two continuous variables with `geom_point()`
 
 --
-  
-  - We used `geom_point()` to display the data as a scatterplot
-  
---
 
-- What if we wanted to determine which state is home to the most selective schools?
+- What if we wanted to see which state has the most selective schools?
 
 --
 
@@ -621,7 +642,7 @@ df %&gt;%
 
 # Categorical Data
 
-- This gives us two variables again, but one of them is now a `character` type
+- Two variables (`stabbr` and `selective_avg`), but one of them is now a `character` type
 
 --
 
@@ -649,17 +670,13 @@ p &lt;- df %&gt;%
 p
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-# Categorical Data
+# Categorical Data: `geom_bar()`
 
-- Let's try a barplot instead using `geom_bar()`
-
---
-
-  - NB: `geom_bar()` will automatically try to count the values on the x-axis
+- NB: `geom_bar()` will automatically count the values on the x-axis
   
 --
 
@@ -670,11 +687,11 @@ df %&gt;%
   geom_bar()
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-# Categorical Data
+# Categorical Data: `geom_bar()`
 
 - This is fine if we just want to know which states have the most schools in our data
 
@@ -704,7 +721,7 @@ p &lt;- df %&gt;%
 p
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -736,7 +753,7 @@ p &lt;- df %&gt;%
 p
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -762,7 +779,7 @@ p &lt;- df %&gt;%
 p
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -780,7 +797,7 @@ p +
        y = "State")
 ```
 
-&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Intro_to_R_Part3_slides_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 

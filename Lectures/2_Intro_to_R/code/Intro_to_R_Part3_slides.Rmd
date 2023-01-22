@@ -366,51 +366,6 @@ df %>%
 --
 
   - ...the `%>%` in `tidyverse`!
-  
---
-
-  - We can force aesthetics by setting code outside the `aes()`
-  
---
-
-```{r,eval = F}
-df %>%
-  ggplot(aes(x = adm_rate_pct,y = sat_avg)) + 
-  geom_point(color = 'red') #<<
-```
-
----
-
-# Plotting data
-
-```{r,echo=F,warning=F}
-df %>%
-  ggplot(aes(x = adm_rate,y = sat_avg)) + 
-  geom_point(color = 'red')
-```
-
----
-
-# Plotting data
-
-- Or we can make more aesthetics dependent on the data
-
-```{r,eval = F}
-df %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,
-             color = stabbr)) + #<<
-  geom_point()
-```
-
----
-
-# Plotting data
-
-```{r,echo=F,warning=F}
-df %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,color = stabbr)) + 
-  geom_point()
-```
 
 ---
 
@@ -445,44 +400,102 @@ df %>%
 ```
 
 
-
 ---
 
-# Plotting data
+# The .blue[Research] Camp
 
-- Which school is most selective but also with the lowest SAT?
+- .blue[RQ]: How might future earnings and SAT scores be **related**?
 
 --
 
-  - This is an **outlier**
+  - .blue[Theory]: SATs measure student ability.
+  
+  - .blue[Theory]: Student ability is valued by the labor market.
+  
+  - .blue[Theory]: Firms pay more for students with higher SAT scores.
   
 --
 
-  - This school is the **furthest** from our .blue[theory]
+  - .blue[Hypothesis]: Earnings and SAT scores should be **positively** related
+  
+---
+
+# Plotting Quiz
+
+- Which variable goes on the x-axis?
+
+--
+
+  - **SAT scores**
+  
+--
+
+- Which variable goes on the y-axis?
+
+  - **Earnings**
+  
+--
+
+- In our theory, SAT scores **cause** earnings
+
+--
+
+- Why might this **not** be the case?
+
+--
+
+  - Spurious 1: SAT scores **and** earnings are caused by student ability
+  
+  - Spurious 2: SAT scores **and** earnings are caused by socio-economic privilege
+  
+---
+
+# Let's Plot!
+
+```{r,eval = F}
+df %>%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + # Build axes
+  geom_point() +  # Add points
+  geom_smooth(method = 'lm',se = F) # Add line of best fit
+```
+
+---
+
+# Outliers
+
+- Which schools are furthest from the line?
+
+--
+
+  - These are **outliers**
+  
+--
+
+  - These schools are the **furthest** from our .blue[theory]
 
 --
 
 ```{r}
 df %>%
-  mutate(out = ifelse(adm_rate < .25 & sat_avg < 1000,
+  mutate(out = ifelse(md_earn_wne_p6 > 100000,
                           instnm,  # Value if TRUE
                           NA)) %>% # Value if FALSE
-  filter(!is.na(out)) %>%
-  select(instnm,adm_rate,sat_avg)
+  drop_na(out,sat_avg) %>%
+  select(instnm,md_earn_wne_p6,sat_avg)
 ```
 
 ---
 
 # Plotting data
 
-- We can add this as a label!
+- We can add these as labels!
 
 ```{r,eval=F}
 df %>%
-  mutate(out = ifelse(adm_rate < .25 & sat_avg < 1000,
-                      instnm,
-                      NA)) %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,
+   mutate(out = ifelse(md_earn_wne_p6 > 100000,
+                          instnm,  # Value if TRUE
+                          NA)) %>% # Value if FALSE
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6,
              label = out)) + #<<
   geom_point() + 
   geom_text() #<<
@@ -494,10 +507,9 @@ df %>%
 
 ```{r,echo=F,warning=F}
 df %>%
-  mutate(hl_schl = ifelse(adm_rate < .25 & sat_avg < 1000,instnm,NA)) %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,label = hl_schl)) + 
-  geom_point() + 
-  geom_text()
+   mutate(out = ifelse(md_earn_wne_p6 > 100000,instnm,NA)) %>%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6,label = out)) + 
+  geom_point() + geom_text()
 ```
 
 ---
@@ -506,16 +518,17 @@ df %>%
 
 - Let's accentuate the outlier more with color
 
-```{r,eval=F}
-df %>%
-  mutate(out = ifelse(adm_rate < .25 & sat_avg < 1000,
-                      instnm,
-                      NA)) %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,
-             color = out,label = out)) + #<<
+```{r}
+p <- df %>%
+   mutate(out = ifelse(md_earn_wne_p6 > 100000,
+                          instnm,  # Value if TRUE
+                          NA)) %>% # Value if FALSE
+  drop_na(sat_avg) %>%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6,
+             label = out,color = out)) + #<<
   geom_point() + 
-  scale_color_manual(name = "Outlier",values = c('red','black')) + #<<
-  geom_text(hjust = 0,vjust = 1,color = 'black',size = 3)
+  scale_color_manual(name = "Outlier",values = c('red','red','black')) + #<<
+  geom_text(hjust = .5,vjust = 1,color = 'black',size = 3)
 ```
 
 ---
@@ -523,27 +536,21 @@ df %>%
 # Plotting data
 
 ```{r,echo=F,warning=F}
-df %>%
-  mutate(hl_schl = ifelse(adm_rate < .25 & sat_avg < 1000,instnm,NA)) %>%
-  ggplot(aes(x = adm_rate,y = sat_avg,color = hl_schl,label = hl_schl)) + 
-  geom_point() + 
-  scale_color_manual(name = "Outlier",values = c('red','black')) + 
-  geom_text(hjust = 0,vjust = 1,size = 4)
+p + 
+  theme(legend.position = 'none')
 ```
+
+
 
 ---
 
 # Categorical Data
 
-- Thus far, we have used two continuous variables: `adm_rate` and `sat_avg`
+- Thus far, plotting two continuous variables with `geom_point()`
 
 --
-  
-  - We used `geom_point()` to display the data as a scatterplot
-  
---
 
-- What if we wanted to determine which state is home to the most selective schools?
+- What if we wanted to see which state has the most selective schools?
 
 --
 
@@ -561,7 +568,7 @@ df %>%
 
 # Categorical Data
 
-- This gives us two variables again, but one of them is now a `character` type
+- Two variables (`stabbr` and `selective_avg`), but one of them is now a `character` type
 
 --
 
@@ -589,13 +596,9 @@ p
 
 ---
 
-# Categorical Data
+# Categorical Data: `geom_bar()`
 
-- Let's try a barplot instead using `geom_bar()`
-
---
-
-  - NB: `geom_bar()` will automatically try to count the values on the x-axis
+- NB: `geom_bar()` will automatically count the values on the x-axis
   
 --
 
@@ -607,7 +610,7 @@ df %>%
 
 ---
 
-# Categorical Data
+# Categorical Data: `geom_bar()`
 
 - This is fine if we just want to know which states have the most schools in our data
 
