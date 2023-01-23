@@ -101,5 +101,5 @@ df %>%
 ## Question 9 [2 points + 1 EC]
 *What relationship do you observe? Why do you think this relationship exists? EC: Is there any reason to be suspicious of this pattern?*
 
-> - I observe a positive relationship between SAT scores and earnings. I theorize that this relationship reflects the fact that SAT scores capture student abilities that are rewarded on the labor market. EC: However, SAT scores are also correlated with many other socio-economic factors 
+> - Write answer here
 
