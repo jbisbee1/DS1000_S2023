@@ -98,7 +98,7 @@ df %>%
   geom_point() + # Add the points
 ```
 
-## Question 9 [2 points + 1 EC]
+## Question 8 [2 points + 1 EC]
 *What relationship do you observe? Why do you think this relationship exists? EC: Is there any reason to be suspicious of this pattern?*
 
 > - Write answer here
