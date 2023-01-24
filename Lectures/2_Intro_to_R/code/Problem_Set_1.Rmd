@@ -95,7 +95,7 @@ df %>%
 ```{r}
 df %>%
   ggplot(aes(x = ,y = )) +  # Build the plot with SAT scores on the x-axis and earnings on the y-axis
-  geom_point() + # Add the points
+  geom_point() # Add the points
 ```
 
 ## Question 8 [2 points + 1 EC]
