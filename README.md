@@ -199,14 +199,19 @@ Lecture Content (2023/01/18): Part 2 - Objects, functions, and `<-`
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_slides.html#1)
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_hw.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2705775/View)
 
 Lecture Content (2023/01/23): Part 3 - Visualization in `R`
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_slides.html#1)
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2710468/View)
 * **Problem Set 1 (due 2023-01-27 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Problem_Set_1.Rmd)
 
 **Review Session (2023/01/25): Review of Intro to `R` section.**
+* In-Class Notes: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.Rmd)
+* Homework (same as Monday): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2713402/View)
 
 *[Back to ToC](#table-of-contents)*
 

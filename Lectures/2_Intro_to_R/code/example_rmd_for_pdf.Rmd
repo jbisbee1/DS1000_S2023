@@ -1,0 +1,129 @@
+---
+title: "Untitled"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-01-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+sc_debt <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/data/sc_debt.Rds?raw=true')
+```
+
+# Here is a section
+
+Here are my answers to the problem.
+
+```{r}
+sc_debt %>%
+  filter(instnm == 'Vanderbilt University') %>%
+  select(instnm,sat_avg,adm_rate)
+```
+
+
+
+
+# More powerful `filter()`
+
+- `str_detect()`: allows us to search for a **PART** of a word
+
+```{r}
+sc_debt %>%
+  filter(str_detect(string = instnm,pattern = 'Vand')) %>%
+  select(instnm,sat_avg,adm_rate)
+```
+
+- logical operators
+  - & command chains two logical requests
+  - | OR command 
+
+```{r}
+sc_debt %>%
+  filter(str_detect(string = instnm,pattern = 'ofVermont|of Colorado')) %>%
+  select(instnm,stabbr,sat_avg)
+```
+
+- ! command means NOT
+  - $ indicates string ending
+
+```{r}
+sc_debt %>%
+  filter(!str_detect(string = instnm,pattern = 'o$'))
+```
+
+# `grepl()` versus `str_detect()`
+
+```{r}
+sc_debt %>%
+  filter(grepl(pattern = 'of Vermont|of Colorado',x = instnm))
+
+sc_debt %>%
+  filter(str_detect(string = instnm,pattern = 'of Vermont|of Colorado') |
+           adm_rate < .1)
+
+glimpse(sc_debt)
+```
+
+# Greater than / less than
+
+- < > <= >=
+
+```{r}
+sc_debt %>%
+  filter(sat_avg >= 1400) %>%
+  select(instnm,sat_avg)
+```
+  
+# What's the diff between `glimpse()` and `select()`
+
+`glimpse()`: show us all columns in an easy to read manner
+
+```{r}
+glimpse(sc_debt)
+
+sc_debt %>%
+  select(instnm,preddeg,stabbr)
+```
+# `ifelse()`
+
+```{r}
+sc_debt_updated <- sc_debt %>%
+  mutate(future_earning_bins = ifelse(md_earn_wne_p6 < 15000,
+                                      "Low Future Earnings",
+                                      ifelse(md_earn_wne_p6 < 30000 & md_earn_wne_p6 >= 15000,
+                                             "Lower Middle Future Earnings",
+                                             ifelse(md_earn_wne_p6 < 60000 & md_earn_wne_p6 >= 30000,
+                                                    "Upper Middle Future Earnings",
+                                                    "High Future Earnings"))))
+
+sc_debt_updated %>%
+  select(instnm,future_earning_bins,md_earn_wne_p6)
+```
+
+# `print()` versus `head()`
+
+```{r}
+sc_debt %>%
+  print(n = 5)
+
+sc_debt %>%
+  head(5)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
