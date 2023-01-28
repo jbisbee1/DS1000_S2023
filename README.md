@@ -76,7 +76,7 @@ Both problem sets and exams will have opportunities to earn extra credit, theore
 
 ### Late Assignments
 
-Every problem set is assigned on a Monday, and due on Brightspace by **6PM Nashville time on the following Friday**. Problem sets should be submitted via Brightspace. The problem sets are designed to require no more than two hours in total to complete. Late submissions will be **penalized 1 point off for each day late**. After three days, problem sets will no longer be accepted and will be scored 0. (But also remember that your lowest scoring problem set will not be counted toward your final grade, effectively giving you one "freebie".) Answer keys for the preceding week's problem set are posted on Wednesdays after lecture.
+Every problem set is assigned on a Monday, and due on Brightspace by **11:59PM Nashville time on the following Friday**. Problem sets should be submitted via Brightspace. The problem sets are designed to require no more than two hours in total to complete. Late submissions will be **penalized 1 point off for each day late**. After three days, problem sets will no longer be accepted and will be scored 0. (But also remember that your lowest scoring problem set will not be counted toward your final grade, effectively giving you one "freebie".) Answer keys for the preceding week's problem set are posted on Wednesdays after lecture.
 
 ### Cell Phones, Laptops, Tablets, etc.
 
