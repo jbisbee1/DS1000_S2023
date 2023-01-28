@@ -210,7 +210,7 @@ Lecture Content (2023/01/23): Part 3 - Visualization in `R`
 
 **Review Session (2023/01/25): Review of Intro to `R` section.**
 * In-Class Notes: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.Rmd)
-* Homework (same as Monday): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
+* Homework (same as Monday): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2713402/View)
 
 *[Back to ToC](#table-of-contents)*
