@@ -222,6 +222,7 @@ Lecture Content (2023/01/30): Replicability in `R`, tabular data
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#1)
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_hw.Rmd)
 * **Problem Set 2:** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/ds1000_problem_set_2.Rmd)
+* Data: [Two versions of exit polls](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data)
 
 *[Back to ToC](#table-of-contents)*
 
