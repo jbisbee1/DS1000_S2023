@@ -225,7 +225,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 --
 
-- Set up a new folder for `Lecture_2023_01_18`
+- Set up a new folder for `Lecture_2023_01_30`
 
 --
 
@@ -353,19 +353,23 @@ MI_raw
 
 --
 
-- Thus far we've been using tabular data, where rows are observations (i.e., survey respondents) and columns are variables (i.e., vote choice)
+- Remember that we are using tabular data, where rows are observations (i.e., survey respondents) and columns are variables (i.e., vote choice)
 
 --
 
-- In `tidyverse`, tabular data is referred to as a `tibble`
+- What is the **unit of observation** in these data?
 
 --
 
-- A `tibble` is equivalent to a `data.frame` in base `R`
-
+  - Voters...which voters?
+  
 --
 
-- We can manipulate them with the `filter()`, `select()`, and `mutate()` functions from `tidyverse` we've learned about
+  - Voters in Michigan...all of them?
+  
+--
+
+  - No just a random sample of those leaving the ballot box in 2020
 
 ---
 
@@ -468,7 +472,7 @@ glimpse(MI_raw)
 
 - **Mixtures**
   
-  - `lbl`: string data that is stored with a number. Similar to `fct` but less commonly occuring in base `R`.
+  - `lbl`: string data that is stored with a number. Similar to `fct` but less commonly occurring in base `R`.
   
 ---
 
@@ -480,7 +484,7 @@ glimpse(MI_raw)
 
   1. `NA` code
   
-  2. Some bespoke code for "unit non-response" (often `9`, or `99`, or some large value in `9` that is dissimilar from the rest of the data)
+  2. Some bespoke code for "unit non-response" (often `9`, or `99`, or some large value ending in `9` that is dissimilar from the rest of the data)
 
 
 ---
@@ -548,11 +552,11 @@ MI_raw %>%
 
 --
 
-- Introducing...`ggplot()`
+- Re-introducing...`ggplot()`
 
 --
 
-  - We will get much deeper into this later
+  - Only interested in **single variable**
   
 --
 
@@ -562,7 +566,7 @@ MI_raw %>%
 
   1. `aes(x = [x-axis variable])`
   
-  2. `geom_histogram()`
+  2. `geom_histogram()` (for continuous) or `geom_bar()` (for categorical)
   
 ---
 
@@ -788,17 +792,23 @@ haven::as_factor(MI_final$AGE10) %>% head()
 
 # Step 2: Wrangle
 
-- Goal: Create a new column that converts the value for `AGE10` to the label
+- Goal: Create a new column that converts the value for `AGE10` to a label
 
 --
 
-- To do this, use `mutate()` + the `sjlabelled::get_labels()` function
+- To do this, use `mutate()` + the `haven::as_factor()` function + the `as.character()` function
+
+--
+
+  - Step 1: `as_factor()` function (from `haven`) converts to `fct` class
+  
+  - Step 2: `as.character()` function (from base `R`) converts to `chr` class
 
 --
 
 ```{r}
 MI_final <- MI_final %>%
-  mutate(AGE10_labs = haven::as_factor(AGE10))
+  mutate(AGE10_labs = as.character(haven::as_factor(AGE10)))
 ```
 
 --
@@ -815,20 +825,37 @@ MI_final %>%
   geom_bar(stat = 'count')
 ```
 
+---
+
+# Aside on `geom_bar()`
+
+- Default: `stat = "count"` means show total observations in each category
+
+--
+
+- Override: `stat = "identity"` forces to show a specific value set in `aes()`
+
+```{r}
+MI_final %>%
+  count(AGE10_labs) %>%
+  ggplot(aes(x = AGE10_labs,y = n)) + 
+  geom_bar(stat = 'identity')
+```
+
 
 ---
 
 # Step 2: Wrangle
 
-- Say we want the character names for `PRSMI20`, `QLT20`, and `LGBT`
+- Say we want the category labels for `PRSMI20`, `QLT20`, and `LGBT`
 
 --
 
 ```{r,error = TRUE}
 MI_final <- MI_final %>%
-  mutate(preschoice = haven::as_factor(PRSMI20),
-         Qlty = haven::as_factor(QLT20),
-         LGBT_lab = haven::as_factor(LGBT))
+  mutate(preschoice = as.character(haven::as_factor(PRSMI20)),
+         Qlty = as.character(haven::as_factor(QLT20)),
+         LGBT_lab = as.character(haven::as_factor(LGBT)))
 
 MI_final %>%
   select(preschoice,Qlty,LGBT_lab)
@@ -947,6 +974,50 @@ MI_final %>%
 
 # Let's Wrangle!
 
+- But we still have the `[DON'T READ] Don't know/refused` respondents
+
+--
+
+- Convert "unit non-response" codes to `NA`
+
+--
+
+  - Need to look at them first!
+
+```{r}
+MI_final %>%
+  count(Qlty)
+```
+
+---
+
+# Let's Wrangle!
+
+- Convert "unit non-response" codes to `NA`
+
+```{r}
+MI_final <- MI_final %>%
+  mutate(Qlty = ifelse(grepl("DON'T READ",Qlty),NA,Qlty))
+MI_final %>%
+  count(Qlty)
+```
+
+---
+
+# Let's Wrangle!
+
+- Drop rows where the respondent didn't answer the "quality" question
+
+```{r}
+MI_final %>%
+  drop_na(Qlty) %>%
+  count(Qlty)
+```
+
+---
+
+# Let's Wrangle!
+
 - This is equivalent to `filter(!is.na(Qlty))`
 
 ```{r}
@@ -1041,7 +1112,7 @@ load('../output/MI_prepped.RData')
 
   - `load` for `.RData` files
   
-  - `readRDS` for `.rds` files
+  - `read_rds` for `.rds` files
   
   - `read_csv` for `.csv` files
 
@@ -1078,7 +1149,7 @@ load('../output/MI_prepped.RData')
 
 --
 
-  - The password to take the quiz is `r paste(sample(1:9,size = 4,replace = T),collapse = '')`
+  - The password to take the quiz is #### <!-- `r paste(sample(1:9,size = 4,replace = T),collapse = '')` -->
   
 --
 

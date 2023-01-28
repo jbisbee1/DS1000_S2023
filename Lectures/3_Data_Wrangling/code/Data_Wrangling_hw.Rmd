@@ -17,12 +17,13 @@ Univariate is pretty much what it sounds like: one variable. When undertaking un
 
 ## Motivating Question
 
-Today we'll be working with data from every NBA player who was active during the 2018-19 season. 
+We'll be working with data from every NBA player who was active during the 2018-19 season. 
 
 Here's the data:
 
 ```{r}
-nba<-readRDS("../data/nba_players_2018.Rds")
+require(tidyverse)
+nba<-read_rds("../data/nba_players_2018.Rds")
 ```
 
 This data contains the following variables:

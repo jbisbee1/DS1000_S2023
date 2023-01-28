@@ -27,7 +27,7 @@ class: center, middle, inverse, title-slide
 ]
 .date[
 ### Lecture Date: 2023/01/30
-Slides Updated: 2023-01-02
+Slides Updated: 2023-01-28
 ]
 
 ---
@@ -227,7 +227,7 @@ Slides Updated: 2023-01-02
 
 --
 
-- Set up a new folder for `Lecture_2023_01_18`
+- Set up a new folder for `Lecture_2023_01_30`
 
 --
 
@@ -381,19 +381,23 @@ MI_raw
 
 --
 
-- Thus far we've been using tabular data, where rows are observations (i.e., survey respondents) and columns are variables (i.e., vote choice)
+- Remember that we are using tabular data, where rows are observations (i.e., survey respondents) and columns are variables (i.e., vote choice)
 
 --
 
-- In `tidyverse`, tabular data is referred to as a `tibble`
+- What is the **unit of observation** in these data?
 
 --
 
-- A `tibble` is equivalent to a `data.frame` in base `R`
-
+  - Voters...which voters?
+  
 --
 
-- We can manipulate them with the `filter()`, `select()`, and `mutate()` functions from `tidyverse` we've learned about
+  - Voters in Michigan...all of them?
+  
+--
+
+  - No just a random sample of those leaving the ballot box in 2020
 
 ---
 
@@ -565,7 +569,7 @@ glimpse(MI_raw)
 
 - **Mixtures**
   
-  - `lbl`: string data that is stored with a number. Similar to `fct` but less commonly occuring in base `R`.
+  - `lbl`: string data that is stored with a number. Similar to `fct` but less commonly occurring in base `R`.
   
 ---
 
@@ -577,7 +581,7 @@ glimpse(MI_raw)
 
   1. `NA` code
   
-  2. Some bespoke code for "unit non-response" (often `9`, or `99`, or some large value in `9` that is dissimilar from the rest of the data)
+  2. Some bespoke code for "unit non-response" (often `9`, or `99`, or some large value ending in `9` that is dissimilar from the rest of the data)
 
 
 ---
@@ -706,11 +710,11 @@ MI_raw %&gt;%
 
 --
 
-- Introducing...`ggplot()`
+- Re-introducing...`ggplot()`
 
 --
 
-  - We will get much deeper into this later
+  - Only interested in **single variable**
   
 --
 
@@ -720,7 +724,7 @@ MI_raw %&gt;%
 
   1. `aes(x = [x-axis variable])`
   
-  2. `geom_histogram()`
+  2. `geom_histogram()` (for continuous) or `geom_bar()` (for categorical)
   
 ---
 
@@ -1030,18 +1034,24 @@ haven::as_factor(MI_final$AGE10) %&gt;% head()
 
 # Step 2: Wrangle
 
-- Goal: Create a new column that converts the value for `AGE10` to the label
+- Goal: Create a new column that converts the value for `AGE10` to a label
 
 --
 
-- To do this, use `mutate()` + the `sjlabelled::get_labels()` function
+- To do this, use `mutate()` + the `haven::as_factor()` function + the `as.character()` function
+
+--
+
+  - Step 1: `as_factor()` function (from `haven`) converts to `fct` class
+  
+  - Step 2: `as.character()` function (from base `R`) converts to `chr` class
 
 --
 
 
 ```r
 MI_final &lt;- MI_final %&gt;%
-  mutate(AGE10_labs = haven::as_factor(AGE10))
+  mutate(AGE10_labs = as.character(haven::as_factor(AGE10)))
 ```
 
 --
@@ -1061,21 +1071,41 @@ MI_final %&gt;%
 
 &lt;img src="Data_Wrangling_slides_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
+---
+
+# Aside on `geom_bar()`
+
+- Default: `stat = "count"` means show total observations in each category
+
+--
+
+- Override: `stat = "identity"` forces to show a specific value set in `aes()`
+
+
+```r
+MI_final %&gt;%
+  count(AGE10_labs) %&gt;%
+  ggplot(aes(x = AGE10_labs,y = n)) + 
+  geom_bar(stat = 'identity')
+```
+
+&lt;img src="Data_Wrangling_slides_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
 # Step 2: Wrangle
 
-- Say we want the character names for `PRSMI20`, `QLT20`, and `LGBT`
+- Say we want the category labels for `PRSMI20`, `QLT20`, and `LGBT`
 
 --
 
 
 ```r
 MI_final &lt;- MI_final %&gt;%
-  mutate(preschoice = haven::as_factor(PRSMI20),
-         Qlty = haven::as_factor(QLT20),
-         LGBT_lab = haven::as_factor(LGBT))
+  mutate(preschoice = as.character(haven::as_factor(PRSMI20)),
+         Qlty = as.character(haven::as_factor(QLT20)),
+         LGBT_lab = as.character(haven::as_factor(LGBT)))
 
 MI_final %&gt;%
   select(preschoice,Qlty,LGBT_lab)
@@ -1084,7 +1114,7 @@ MI_final %&gt;%
 ```
 ## # A tibble: 1,231 × 3
 ##    preschoice                   Qlty                 LGBT_…¹
-##    &lt;fct&gt;                        &lt;fct&gt;                &lt;fct&gt;  
+##    &lt;chr&gt;                        &lt;chr&gt;                &lt;chr&gt;  
 ##  1 Joe Biden, the Democrat      Has good judgment    &lt;NA&gt;   
 ##  2 Joe Biden, the Democrat      &lt;NA&gt;                 No     
 ##  3 Joe Biden, the Democrat      &lt;NA&gt;                 No     
@@ -1156,7 +1186,7 @@ MI_final %&gt;% select(preschoice,Qlty)
 ```
 ## # A tibble: 1,231 × 2
 ##    preschoice                   Qlty                      
-##    &lt;fct&gt;                        &lt;fct&gt;                     
+##    &lt;chr&gt;                        &lt;chr&gt;                     
 ##  1 Joe Biden, the Democrat      Has good judgment         
 ##  2 Joe Biden, the Democrat      &lt;NA&gt;                      
 ##  3 Joe Biden, the Democrat      &lt;NA&gt;                      
@@ -1186,13 +1216,13 @@ MI_final %&gt;%
 ```
 ## # A tibble: 6 × 2
 ##   preschoice                          n
-##   &lt;fct&gt;                           &lt;int&gt;
-## 1 Will/Did not vote for president     6
-## 2 Joe Biden, the Democrat           723
-## 3 Donald Trump, the Republican      459
-## 4 Undecided/Don’t know                4
-## 5 Refused                            14
-## 6 Another candidate                  25
+##   &lt;chr&gt;                           &lt;int&gt;
+## 1 Another candidate                  25
+## 2 Donald Trump, the Republican      459
+## 3 Joe Biden, the Democrat           723
+## 4 Refused                            14
+## 5 Undecided/Don’t know                4
+## 6 Will/Did not vote for president     6
 ```
 
 ---
@@ -1210,19 +1240,19 @@ MI_final %&gt;%
 ```
 ## # A tibble: 12 × 3
 ##    preschoice                      SEX            n
-##    &lt;fct&gt;                           &lt;hvn_lbl_&gt; &lt;int&gt;
-##  1 Will/Did not vote for president 1 [Male]       1
-##  2 Will/Did not vote for president 2 [Female]     5
-##  3 Joe Biden, the Democrat         1 [Male]     304
-##  4 Joe Biden, the Democrat         2 [Female]   419
-##  5 Donald Trump, the Republican    1 [Male]     247
-##  6 Donald Trump, the Republican    2 [Female]   212
-##  7 Undecided/Don’t know            1 [Male]       3
-##  8 Undecided/Don’t know            2 [Female]     1
-##  9 Refused                         1 [Male]       7
-## 10 Refused                         2 [Female]     7
-## 11 Another candidate               1 [Male]      17
-## 12 Another candidate               2 [Female]     8
+##    &lt;chr&gt;                           &lt;hvn_lbl_&gt; &lt;int&gt;
+##  1 Another candidate               1 [Male]      17
+##  2 Another candidate               2 [Female]     8
+##  3 Donald Trump, the Republican    1 [Male]     247
+##  4 Donald Trump, the Republican    2 [Female]   212
+##  5 Joe Biden, the Democrat         1 [Male]     304
+##  6 Joe Biden, the Democrat         2 [Female]   419
+##  7 Refused                         1 [Male]       7
+##  8 Refused                         2 [Female]     7
+##  9 Undecided/Don’t know            1 [Male]       3
+## 10 Undecided/Don’t know            2 [Female]     1
+## 11 Will/Did not vote for president 1 [Male]       1
+## 12 Will/Did not vote for president 2 [Female]     5
 ```
 
 ---
@@ -1293,7 +1323,7 @@ MI_final %&gt;%
 ```
 ## # A tibble: 6 × 2
 ##   preschoice                          n
-##   &lt;fct&gt;                           &lt;int&gt;
+##   &lt;chr&gt;                           &lt;int&gt;
 ## 1 Joe Biden, the Democrat           723
 ## 2 Donald Trump, the Republican      459
 ## 3 Another candidate                  25
@@ -1318,12 +1348,12 @@ MI_final %&gt;%
 ```
 ## # A tibble: 6 × 2
 ##   Qlty                                n
-##   &lt;fct&gt;                           &lt;int&gt;
-## 1 Can unite the country             125
-## 2 Is a strong leader                138
+##   &lt;chr&gt;                           &lt;int&gt;
+## 1 [DON'T READ] Don’t know/refused    26
+## 2 Can unite the country             125
 ## 3 Cares about people like me        121
 ## 4 Has good judgment                 205
-## 5 [DON'T READ] Don’t know/refused    26
+## 5 Is a strong leader                138
 ## 6 &lt;NA&gt;                              616
 ```
 
@@ -1344,12 +1374,92 @@ MI_final %&gt;%
 ```
 ## # A tibble: 5 × 2
 ##   Qlty                                n
-##   &lt;fct&gt;                           &lt;int&gt;
-## 1 Can unite the country             125
-## 2 Is a strong leader                138
+##   &lt;chr&gt;                           &lt;int&gt;
+## 1 [DON'T READ] Don’t know/refused    26
+## 2 Can unite the country             125
 ## 3 Cares about people like me        121
 ## 4 Has good judgment                 205
-## 5 [DON'T READ] Don’t know/refused    26
+## 5 Is a strong leader                138
+```
+
+---
+
+# Let's Wrangle!
+
+- But we still have the `[DON'T READ] Don't know/refused` respondents
+
+--
+
+- Convert "unit non-response" codes to `NA`
+
+--
+
+  - Need to look at them first!
+
+
+```r
+MI_final %&gt;%
+  count(Qlty)
+```
+
+```
+## # A tibble: 6 × 2
+##   Qlty                                n
+##   &lt;chr&gt;                           &lt;int&gt;
+## 1 [DON'T READ] Don’t know/refused    26
+## 2 Can unite the country             125
+## 3 Cares about people like me        121
+## 4 Has good judgment                 205
+## 5 Is a strong leader                138
+## 6 &lt;NA&gt;                              616
+```
+
+---
+
+# Let's Wrangle!
+
+- Convert "unit non-response" codes to `NA`
+
+
+```r
+MI_final &lt;- MI_final %&gt;%
+  mutate(Qlty = ifelse(grepl("DON'T READ",Qlty),NA,Qlty))
+MI_final %&gt;%
+  count(Qlty)
+```
+
+```
+## # A tibble: 5 × 2
+##   Qlty                           n
+##   &lt;chr&gt;                      &lt;int&gt;
+## 1 Can unite the country        125
+## 2 Cares about people like me   121
+## 3 Has good judgment            205
+## 4 Is a strong leader           138
+## 5 &lt;NA&gt;                         642
+```
+
+---
+
+# Let's Wrangle!
+
+- Drop rows where the respondent didn't answer the "quality" question
+
+
+```r
+MI_final %&gt;%
+  drop_na(Qlty) %&gt;%
+  count(Qlty)
+```
+
+```
+## # A tibble: 4 × 2
+##   Qlty                           n
+##   &lt;chr&gt;                      &lt;int&gt;
+## 1 Can unite the country        125
+## 2 Cares about people like me   121
+## 3 Has good judgment            205
+## 4 Is a strong leader           138
 ```
 
 ---
@@ -1366,14 +1476,13 @@ MI_final %&gt;%
 ```
 
 ```
-## # A tibble: 5 × 2
-##   Qlty                                n
-##   &lt;fct&gt;                           &lt;int&gt;
-## 1 Can unite the country             125
-## 2 Is a strong leader                138
-## 3 Cares about people like me        121
-## 4 Has good judgment                 205
-## 5 [DON'T READ] Don’t know/refused    26
+## # A tibble: 4 × 2
+##   Qlty                           n
+##   &lt;chr&gt;                      &lt;int&gt;
+## 1 Can unite the country        125
+## 2 Cares about people like me   121
+## 3 Has good judgment            205
+## 4 Is a strong leader           138
 ```
 
 ---
@@ -1457,8 +1566,8 @@ MI_final
 ## # … with 1,221 more rows, and 9 more variables:
 ## #   EDUC18 &lt;hvn_lbl_&gt;, LGBT &lt;hvn_lbl_&gt;,
 ## #   BRNAGAIN &lt;hvn_lbl_&gt;, LATINOS &lt;hvn_lbl_&gt;,
-## #   RACISM20 &lt;hvn_lbl_&gt;, QLT20 &lt;hvn_lbl_&gt;, Qlty &lt;fct&gt;,
-## #   PRSMI20 &lt;hvn_lbl_&gt;, preschoice &lt;fct&gt;
+## #   RACISM20 &lt;hvn_lbl_&gt;, QLT20 &lt;hvn_lbl_&gt;, Qlty &lt;chr&gt;,
+## #   PRSMI20 &lt;hvn_lbl_&gt;, preschoice &lt;chr&gt;
 ```
 
 
@@ -1499,7 +1608,7 @@ load('../output/MI_prepped.RData')
 
   - `load` for `.RData` files
   
-  - `readRDS` for `.rds` files
+  - `read_rds` for `.rds` files
   
   - `read_csv` for `.csv` files
 
@@ -1536,7 +1645,7 @@ load('../output/MI_prepped.RData')
 
 --
 
-  - The password to take the quiz is 2457
+  - The password to take the quiz is #### &lt;!-- 2457 --&gt;
   
 --
 
