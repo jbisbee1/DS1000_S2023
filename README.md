@@ -223,6 +223,7 @@ Lecture Content (2023/01/30): Replicability in `R`, tabular data
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_hw.Rmd)
 * **Problem Set 2:** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/ds1000_problem_set_2.Rmd)
 * Data: [Two versions of exit polls](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data)
+* Data: [NBA data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data/nba_players_2018.Rds)
 
 *[Back to ToC](#table-of-contents)*
 
@@ -232,6 +233,7 @@ Lecture Content (2023/02/01): Univariate - Summaries of a single variable
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.html#1)
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_hw.Rmd)
+* Data: [Basketball Data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/4_Uni_Multivariate/data)
 
 Lecture Content (2023/02/06): Multivariate Part 1 - Summaries of multiple variables
 
