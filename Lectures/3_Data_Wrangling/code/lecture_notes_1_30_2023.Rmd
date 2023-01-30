@@ -1,0 +1,108 @@
+---
+title: "Lecture 1/30/2023"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-01-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+rm(list = ls())
+
+require(tidyverse)
+
+MI_raw <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/data/MI2020_ExitPoll.rds?raw=true')
+
+MI_raw
+```
+
+# Looking for `NA` data
+
+```{r}
+summary(MI_raw %>% select(LALVOTERID,SEX,AGE10,PARTYID,LGBT,QLT20))
+```
+
+# Unit non-response
+
+```{r}
+MI_raw %>%
+  count(PARTYID)
+```
+
+# Plotting to find unit-non response
+
+```{r}
+MI_raw %>%
+  ggplot(aes(x = AGE10)) + 
+  geom_bar()
+```
+
+# Average Age
+
+```{r}
+# THIS IS INFLATED BECAUSE OF THE 99!
+MI_raw %>%
+  summarise(avg_age = mean(AGE10,na.rm=T))
+
+# REPLACE 99 with NA
+MI_raw %>%
+  mutate(AGE10_clean = ifelse(AGE10 == 99,
+                              NA,
+                              AGE10)) %>%
+  summarise(avg_age_clean = mean(AGE10_clean,na.rm=T))
+
+# Object assignment point
+# MI_raw %>%
+#   select(AGE10,AGE10_clean)
+
+
+MI_raw <- MI_raw %>%
+  mutate(AGE10_clean = ifelse(AGE10 == 99,
+                              NA,
+                              AGE10))
+
+MI_raw %>% 
+  select(AGE10,AGE10_clean)
+
+```
+
+# Converting to character with `haven`
+
+```{r}
+MI_raw %>%
+  mutate(AGE10_clean_haven = haven::as_factor(AGE10)) %>%
+  # select(AGE10,AGE10_clean,AGE10_clean_haven) %>%
+  select(matches('AGE10'))
+
+
+# Then convert to character type
+MI_raw %>%
+  mutate(AGE10_chr = as.character(haven::as_factor(AGE10))) %>%
+  select(matches('AGE10'))
+
+MI_raw %>%
+  select(matches('AGE10'))
+```
+
+# Plotting with labels
+
+```{r}
+MI_raw <- MI_raw %>%
+  mutate(AGE10_chr = as.character(haven::as_factor(AGE10)))
+
+MI_raw %>%
+  ggplot(aes(AGE10_chr)) + 
+  geom_bar()
+
+```
+
+
+
+
+
+
