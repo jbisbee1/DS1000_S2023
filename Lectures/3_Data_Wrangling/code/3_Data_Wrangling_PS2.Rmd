@@ -37,7 +37,7 @@ MI_raw <- read_rds()
 
 
 ## Question 1 [1 point]
-How many voters were from Wayne County?
+How many voters were from Wayne County? The county variable is called `County`.
 ```{r}
 MI_raw %>%
   count() %>% # Count the number of respondents per county
@@ -47,7 +47,7 @@ MI_raw %>%
 > Write one or two sentences here.
 
 ## Question 2 [1 point]
-Who did the majority of surveyed voters support in the 2020 presidential election?
+Who did the majority of surveyed voters support in the 2020 presidential election? The candidate variable is `PRSMI20`.
 ```{r}
 MI_raw %>%
   count() %>% # Count the number of respondents who supported each candidate
@@ -58,7 +58,7 @@ MI_raw %>%
 > Write one or two sentences here.
 
 ## Question 3 [1 point + 1 EC]
-What proportion of women supported Trump? What proportion of men supported Biden? EXTRA CREDIT: Answer using `group_by()`.
+What proportion of women supported Trump? What proportion of men supported Biden? The candidate variable is `PRSMI20` and the gender variable is `SEX`. EXTRA CREDIT: Answer using `group_by()`.
 ```{r}
 # Non-Extra Credit Approach
 MI_raw %>%
@@ -140,7 +140,7 @@ MI_clean <- MI_clean %>%
 ```
 
 ## Question 9 [1 point + 1 EC]
-What proportion of LGBT-identifying voters supported Trump? EXTRA CREDIT: Plot this answer.
+What proportion of LGBT-identifying voters supported Trump? The candidate variable is `PRSMI20` and the LGBT variable is `Lgbt_clean` (from above). EXTRA CREDIT: Plot this answer.
 
 ```{r}
 MI_clean %>%
@@ -153,7 +153,7 @@ MI_clean %>%
 
 
 ## Question 10 [1 point + 1 EC]
-Plot the distribution of ages in the data. EXTRA CREDIT: color by the number of voters in each bracket that supported Trump, Biden, or someone else. Make sure to drop voters who didn't indicate who they voted for **AND** those who didn't indicate their age.
+Plot the distribution of ages in the data. EXTRA CREDIT: color by the number of voters in each bracket that supported Trump, Biden, or someone else. Make sure to drop voters who didn't indicate who they voted for **AND** those who didn't indicate their age. The candidate variable is `PRSMI20` and the age variable is `Age` (from above).
 
 ```{r}
 # Simple

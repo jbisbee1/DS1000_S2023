@@ -225,6 +225,8 @@ Lecture Content (2023/01/30): Replicability in `R`, tabular data
 * **Problem Set 2:** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd)
 * Data: [Two versions of exit polls](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data)
 * Data: [NBA data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data/nba_players_2018.Rds)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2717639/View)
+
 
 *[Back to ToC](#table-of-contents)*
 
