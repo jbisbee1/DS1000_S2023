@@ -1,0 +1,95 @@
+---
+title: "Lecture Notes 1/23/2023"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-01-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Opening data directly from internet
+
+```{r}
+require(tidyverse)
+
+df <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/data/sc_debt.Rds?raw=true')
+```
+
+```{r}
+mean(c(1,50,12,50,100))
+```
+
+
+```{r}
+df %>%
+  filter(adm_rate < .1) %>%
+  summarise(sat_avg_10 = mean(sat_avg,na.rm=T))
+```
+
+```{r}
+df %>%
+  filter(adm_rate > .1 & adm_rate < .5) %>%
+  summarise(sat_avg_10_50 = mean(sat_avg,na.rm=T))
+```
+```{r}
+df %>%
+  select(instnm,sat_avg,selective,adm_rate)
+```
+
+```{r}
+df %>%
+  ggplot(aes(x = adm_rate,y = sat_avg)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm',se = F)
+```
+
+```{r}
+df %>%
+  ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm',se = F)
+
+```
+
+
+```{r}
+df %>%
+  mutate(outlier = ifelse(md_earn_wne_p6 > 100000,
+                          instnm,
+                          NA)) %>%
+  select(instnm,outlier) %>%
+  drop_na(outlier)
+
+df %>%
+  filter(md_earn_wne_p6 > 100000) %>%
+  select(instnm)
+```
+
+```{r}
+df %>%
+  group_by(stabbr) %>% # calculate average adm_rate by state
+  summarise(adm_avg = mean(adm_rate,na.rm=T)) %>% # calculate average adm_rate
+  ggplot(aes(x = reorder(stabbr,adm_avg), # reorder x-axis by adm_avg
+             y = adm_avg)) +  # put adm_avg on y-axis
+  geom_bar(stat = 'identity') # override default geom_bar() behavior
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

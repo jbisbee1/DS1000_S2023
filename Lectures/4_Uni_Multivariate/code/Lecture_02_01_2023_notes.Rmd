@@ -1,0 +1,84 @@
+---
+title: "Lecture Notes 2/1/2023"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load the data
+
+```{r}
+require(tidyverse)
+
+nba <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/nba_players_2018.Rds?raw=true')
+
+nba
+```
+
+# `summary()` function
+
+```{r}
+# nba %>% select(pts)
+summary(nba$pts)
+```
+
+# Univariate Visualization
+
+- Using `geom_histogram()`
+
+```{r}
+nba %>%
+  ggplot(aes(x = pts)) + 
+  geom_histogram(bins = 150)
+```
+# Adding summary stats visually
+
+```{r}
+nba %>%
+  ggplot(aes(x = pts)) + 
+  geom_histogram() +
+  geom_vline(xintercept = quantile(x = nba$pts,c(.25,.5,.75)),
+             color = 'red',linetype = 'dashed') + 
+  annotate(geom = 'text',x = quantile(x = nba$pts,c(.25,.5,.75)),
+           y = Inf,label = c('25%','50%','75%'),vjust = 1) + 
+  labs(title = 'Total Points Scored',
+       subtitle = "Active NBA Players (530): 2018-19 Season",
+       x = "Total Points Scored",
+       y = "Number of Players")
+
+
+```
+
+# The Process
+
+Step 1: Look
+
+```{r}
+nba %>%
+  select(fgm)
+
+summary(nba$fgm)
+
+nba %>%
+  ggplot(aes(x = fgm)) + 
+  geom_density()
+  # geom_histogram(bins = 100)
+
+nba %>%
+  select(slugTeam)
+
+summary(nba$slugTeam)
+
+nba %>%
+  ggplot(aes(x = slugTeam)) + 
+  geom_bar()
+```
+
+
+
+
+
