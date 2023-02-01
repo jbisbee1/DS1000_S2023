@@ -236,7 +236,9 @@ Lecture Content (2023/02/01): Univariate - Summaries of a single variable
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.html#1)
 * Homework: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_hw.Rmd)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_01_2023.Rmd)
 * Data: [Basketball Data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/4_Uni_Multivariate/data)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2720132/View)
 
 Lecture Content (2023/02/06): Multivariate Part 1 - Summaries of multiple variables
 
