@@ -246,6 +246,8 @@ Lecture Content (2023/02/06): Multivariate Part 1 - Summaries of multiple variab
 * Homework (due 2023/02/08): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part1_hw.Rmd)
 * Data: [Michigan Survey (prepped)](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/MI2020_ExitPoll_small.rds); [Presidential Vote](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/Pres2020_PV.Rds)
 * **Problem Set 3 (due 2023-02-10 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS3.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2724236/View)
+
 
 Lecture Content (2023/02/08): Multivariate Part 2 - Visualizations of multiple variables
 
