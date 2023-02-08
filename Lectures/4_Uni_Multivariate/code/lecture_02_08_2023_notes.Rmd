@@ -1,0 +1,116 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# QUIZ 8
+Password: 1576
+
+
+# Then load the data
+- `Pres2020_PV.Rds` is on GitHub
+
+```{r}
+require(tidyverse)
+
+poll <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/Pres2020_PV.Rds?raw=true')
+```
+
+# Quick Wrangling
+
+```{r}
+
+poll %>%
+  select(Trump,Biden)
+
+poll <- poll %>%
+  mutate(Trump = Trump/100,
+         Biden = Biden/100,
+         margin = round(Biden - Trump,2))
+```
+
+
+# Bivariate Vis: Binary X Continuous
+
+```{r}
+poll %>%
+  filter(Mode == 'IVR/Online' | Mode == 'Live phone - RDD') %>%
+  ggplot(aes(x = margin,color = Mode)) + 
+  geom_density()
+  # geom_histogram()
+```
+
+# Bivariate Visualization Categorical X Continuous
+
+```{r}
+poll %>%
+  count(Mode)
+
+poll %>%
+  filter(Mode != 'IVR' & Mode != 'Online/Text' & Mode != 'Phone - unknown') %>%
+  ggplot(aes(x = margin,y = reorder(Mode,margin))) + 
+  geom_violin()
+  # geom_boxplot()
+```
+
+# Bivariate Visualization: Continuous X Continuous
+
+```{r}
+poll %>%
+  ggplot(aes(x = Biden,y = Trump)) + 
+  # geom_point(alpha = .3) + # Approach #1 to revealing multiple data on the same point
+  geom_jitter() + # Approach # 2 to revealining multiple data on the same point
+  geom_smooth(method = 'lm')
+```
+
+```{r}
+poll %>%
+  count(Biden,Trump) %>%
+  ggplot(aes(x = Biden,y = Trump,size = n)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+# Working with Dates
+
+- `as.Date()` function converts characters to `date` class variables
+```{r}
+d1 <- as.Date('02/08/2023',format = '%m/%d/%Y')
+midterm <- as.Date('03/08/2023',format = '%m/%d/%Y')
+
+midterm - d1
+
+
+# Let's apply this to the poll data
+poll <- poll %>% 
+  mutate(StartDate = as.Date(StartDate,format = '%m/%d/%Y'),
+         EndDate = as.Date(EndDate,format = '%m/%d/%Y'))
+
+
+poll %>% select(StartDate,EndDate)
+
+poll %>%
+  ggplot(aes(x = StartDate,y = margin)) + 
+  # geom_bar(stat = 'identity')
+  geom_point() + 
+  geom_smooth()
+```
+
+# Look at each point individualls
+
+```{r}
+poll %>%
+  ggplot() + 
+  geom_point(aes(x = StartDate,y = Biden),color = 'blue') + 
+  geom_point(aes(x = StartDate,y = Trump),color = 'red')
+```
+
+
+
+

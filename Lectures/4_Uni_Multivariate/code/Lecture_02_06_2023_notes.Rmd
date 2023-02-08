@@ -1,0 +1,74 @@
+---
+title: "Lecture Notes 2/6/2023"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+mi_ep <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/MI2020_ExitPoll_small.rds?raw=true')
+```
+
+# Preparing data "Wrangling"
+
+```{r}
+MI_final_small <- mi_ep %>%
+  filter(preschoice == 'Donald Trump, the Republican' | preschoice == 'Joe Biden, the Democrat') %>%
+  mutate(BidenVoter = ifelse(preschoice == 'Joe Biden, the Democrat',1,0),
+         TrumpVoter = ifelse(BidenVoter == 1,0,1),
+         AGE10 = ifelse(AGE10 == 99,NA,AGE10))
+```
+
+```{r}
+MI_final_small %>%
+  select(BidenVoter,TrumpVoter,preschoice)
+```
+
+
+# Analysis
+
+```{r}
+MI_final_small %>%
+  count(SEX,preschoice) %>% # count total respondents by gender + choice
+  mutate(prop_overall = n / sum(n)) %>% # calculate proportion of all
+  group_by(SEX) %>% # 40+41: calculate total by gender
+  mutate(tot_resp = sum(n)) %>% 
+  mutate(prop_gender = n / tot_resp) %>% # Calculate proportion gender
+  select(SEX,preschoice,n,tot_resp,prop_gender) # Just make it visible in class
+```
+
+# Multivariate: Age X Sex
+
+```{r}
+toplot <- MI_final_small %>%
+  group_by(SEX,AGE10) %>%
+  summarise(prop_trump = mean(TrumpVoter,na.rm=T)) %>%
+  # ungroup() %>%
+  mutate(prop_trump = round(prop_trump,digits = 2)) %>%
+  spread(key = SEX,value = prop_trump) %>%
+  rename(Male = `1`,Female = `2`) %>%
+  mutate(genderGap = Female - Male)
+
+toplot
+```
+
+# Visualize it!
+
+```{r}
+toplot %>%
+  ggplot(aes(x = AGE10)) + 
+  geom_bar(aes(y = Male),fill = 'forestgreen',stat = 'identity',alpha = .5) + 
+  geom_bar(aes(y = Female),fill = 'skyblue',stat = 'identity',alpha = .7)
+```
+
+```{r}
+toplot %>%
+  ggplot(aes(x = AGE10,y = genderGap)) + 
+  geom_bar(stat = 'identity')
+```
