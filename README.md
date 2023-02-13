@@ -222,7 +222,7 @@ Lecture Content (2023/01/30): Replicability in `R`, tabular data
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#1)
 * Homework (due 2023/02/01): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_hw.Rmd)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/lecture_notes_1_30_2023.Rmd)
-* **Problem Set 2 (due 2023-02-04 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd)
+* **Problem Set 2 (due 2023-02-04 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd), [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd)
 * Data: [Two versions of exit polls](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data)
 * Data: [NBA data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data/nba_players_2018.Rds)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2717639/View)
