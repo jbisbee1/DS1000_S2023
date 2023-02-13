@@ -261,7 +261,9 @@ Lecture Content (2023/02/13): Multivariate Part 3 - Uncertainty and bootstrappin
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.html#1)
 * Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
-* **Problem Set 4 (due 2023-02-17 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/ds1000_problem_set_4.Rmd)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_13_2023.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2730311/View)
+* **Problem Set 4 (due 2023-02-17 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS4.Rmd)
 
 **Review Session (2023/02/15): Review of Uni & Multivariate section.**
 
@@ -291,7 +293,7 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 
 **Review Session (2023/03/06): Review of first half of semester.**
 
-**Midterm Exam (2023/03/08)**
+**Midterm Exam (2023/03/08)**: Assigned 2023/03/06, due 2023/03/10 to Brightspace.
 
 **Spring Break (2023/03/13)**
 

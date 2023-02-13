@@ -1,0 +1,114 @@
+---
+title: "Lecture_2_13_2023_notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+nba <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/nba_players_2018.Rds?raw=true')
+
+gms <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/game_summary.Rds?raw=true')
+```
+
+# Multivariate Analysis
+
+```{r}
+nba %>%
+  filter(org %in% c('Tennessee','Virginia')) %>%
+  group_by(org) %>%
+  summarise(meanFT = mean(pctFT)) %>%
+  ggplot(aes(x = org,y = meanFT)) + 
+  geom_bar(stat = 'identity')
+
+
+# Method 2 visualization
+nba %>%
+  filter(org %in% c('Tennessee','Virginia')) %>%
+  ggplot(aes(x = org,y = pctFT)) + 
+  geom_boxplot()
+```
+
+# Bootstrap sample example
+
+```{r}
+set.seed(123)
+nba %>%
+  select(org,pctFT) %>%
+  sample_n(size = 1,replace = T) 
+
+# Get a simulated season
+simSeason1 <- nba %>%
+  select(org,pctFT) %>%
+  sample_n(size = nrow(nba),replace = T) 
+
+simSeason1 %>%
+  filter(org %in% c('Tennessee','Virginia')) %>%
+  group_by(org) %>%
+  summarise(meanFT = mean(pctFT))
+```
+
+# Repeating a chunk with `for()` loop
+
+```{r}
+bootstrap_result <- NULL
+for(indexNumber in 1:1000) {
+  # stop()
+  simSeason <- nba %>%
+  select(org,pctFT) %>%
+  sample_n(size = nrow(nba),replace = T) %>%
+    mutate(bootstrap_number = indexNumber)
+  
+  bootstrap_result <- bootstrap_result %>%
+    bind_rows(simSeason)
+}
+
+prepared_bootstrap <- bootstrap_result %>%
+  filter(org %in% c('Tennessee','Virginia')) %>%
+  group_by(bootstrap_number,org) %>%
+  summarise(meanFT = mean(pctFT),.groups = 'drop') %>%
+  spread(key = org,value = meanFT) %>%
+  mutate(diff = Tennessee - Virginia)
+
+
+# Calculate confidence
+prepared_bootstrap %>%
+  summarise(confidence = mean(diff > 0,na.rm=T))
+```
+
+# Visualizing Uncertainty
+
+- Method 1: plot the **outcomes**
+
+```{r}
+prepared_bootstrap %>%
+  ggplot() + 
+  geom_density(aes(x = Tennessee),fill = 'orange',alpha = .4) + 
+  geom_density(aes(x = Virginia),fill = 'brown',alpha = .4) + 
+  geom_vline(xintercept = mean(prepared_bootstrap$Tennessee,na.rm=T),
+             linetype = 'dashed',color = 'orange') + 
+  geom_vline(xintercept = mean(prepared_bootstrap$Virginia,na.rm=T),
+             linetype = 'dashed',color = 'brown') + 
+  annotate(geom = 'text',x = mean(prepared_bootstrap$Tennessee,na.rm=T),y = Inf,label = round(mean(prepared_bootstrap$Tennessee,na.rm=T),2),angle = 90,hjust = 1,vjust = 0) + 
+  annotate(geom = 'text',x = mean(prepared_bootstrap$Virginia,na.rm=T),y = Inf,label = round(mean(prepared_bootstrap$Virginia,na.rm=T),2),angle = 90,hjust = 1,vjust = 0)
+```
+
+- Method 2: plotting the **estimates**
+
+
+```{r}
+prepared_bootstrap %>%
+  ggplot(aes(x = diff)) + 
+  geom_density() + 
+  geom_vline(xintercept = 0,linetype = 'dashed')
+```
+
+
+
+
