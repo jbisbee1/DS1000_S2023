@@ -30,7 +30,7 @@ games %>%
 ```{r}
 # Proof of how replace works
 bootstrap_result <- NULL
-for(bsNumber in 1:100000) {
+for(bsNumber in 1:100) {
   bootstrap_result <- games %>%
   sample_n(size = nrow(.),replace = T) %>%
   group_by(isWin) %>%
