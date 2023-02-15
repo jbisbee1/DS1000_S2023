@@ -1,0 +1,110 @@
+---
+title: "Review notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+games <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/game_summary.Rds?raw=true')
+```
+
+# Calculate turnovers by winning / losing by season
+
+```{r}
+games %>%
+  group_by(isWin,yearSeason) %>% # Calculating by both game outcome and season
+  summarise(avgTO = mean(tov),
+            avgPts = mean(pts)) %>% # calculate average turnovers
+  # spread(key = isWin,value = avgTO)
+  pivot_wider(names_from = isWin,values_from = c(avgTO,avgPts))
+```
+
+# Putting this into a bootstrap
+
+```{r}
+# Proof of how replace works
+bootstrap_result <- NULL
+for(bsNumber in 1:100000) {
+  bootstrap_result <- games %>%
+  sample_n(size = nrow(.),replace = T) %>%
+  group_by(isWin) %>%
+  summarise(avgTO = mean(tov)) %>%
+    ungroup() %>%
+    mutate(bsSimulation = bsNumber) %>%
+    bind_rows(bootstrap_result)
+  # print('.')
+}
+
+# Method 1: with backticks
+bootstrap_result %>%
+  spread(key = isWin,value = avgTO) %>%
+  mutate(TO_diff = `TRUE` - `FALSE`)
+
+# Method 2: adjustent to spread function
+bootstrap_result %>%
+  spread(key = isWin,value = avgTO,sep = 'ZZZ') %>%
+  mutate(TO_diff = isWinZZZTRUE - isWinZZZFALSE) %>%
+  summarise(conf = mean(TO_diff < 0))
+
+```
+
+# Do this for multiple teams
+
+```{r}
+set.seed(123)
+bootstrap_result <- NULL
+for(bsNumber in 1:100) {
+  bootstrap_result <- games %>%
+    group_by(nameTeam) %>%
+    # summarise(whatisNparents = n())
+  sample_n(size = n(),replace = T) %>%
+  group_by(isWin,nameTeam) %>%
+  summarise(avgTO = mean(tov),
+            avgPts = mean(pts),.groups = 'drop') %>%
+    ungroup() %>%
+    mutate(bsSimulation = bsNumber) %>%
+    bind_rows(bootstrap_result)
+  cat('.')
+}
+
+toplot <- bootstrap_result %>%
+  pivot_wider(names_from = isWin,values_from = c(avgTO,avgPts)) %>%
+  mutate(diff_TO = avgTO_TRUE - avgTO_FALSE,
+         diff_pts = avgPts_TRUE - avgPts_FALSE) %>%
+  group_by(nameTeam) %>%
+  summarise(conf_TO = mean(diff_TO < 0),
+            conf_pts = mean(diff_pts > 0),
+            avgDiff = mean(diff_TO),
+            avgPts = mean(diff_pts))
+
+
+# Let's visualize
+toplot %>%
+  mutate(conf_binary = ifelse(conf_TO > .95 | conf_TO < .05,'Confident','Not Confident'),
+         avgDiff = round(avgDiff,digits = 2)) %>%
+  ggplot(aes(x = avgDiff,y = reorder(nameTeam,avgDiff),fill = conf_binary)) + 
+  geom_bar(stat = 'identity')
+
+```
+
+```{r}
+games %>%
+  ggplot(aes(x = pts,fill = isWin)) + 
+  geom_histogram(alpha = .4)
+
+games %>%
+  ggplot(aes(x = pts,fill = isWin)) + 
+  geom_density(alpha = .4)
+```
+
+
+
+
+
+
