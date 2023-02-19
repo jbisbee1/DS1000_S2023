@@ -101,6 +101,13 @@ games %>%
 games %>%
   ggplot(aes(x = pts,fill = isWin)) + 
   geom_density(alpha = .4)
+
+games %>%
+  ggplot(aes(x = pts,fill = locationGame)) + 
+  geom_density(alpha = .4) + 
+  geom_histogram(data  = games,aes(x = pts))
+
+
 ```
 
 
