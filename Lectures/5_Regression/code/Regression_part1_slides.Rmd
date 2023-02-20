@@ -354,6 +354,12 @@ glimpse(debt)
 
 --
 
+1. **Substantive:** external validity
+
+2. **Technical:** cross validation won't work! (Wednesday's lecture)
+
+--
+
 ```{r}
 summary(debt %>% select(sat_avg,md_earn_wne_p6))
 ```
@@ -365,6 +371,16 @@ summary(debt %>% select(sat_avg,md_earn_wne_p6))
 - Why visualize both $Y$ and $X$?
 
 --
+
+1. **Substantive:** *See* which units you are talking about
+
+2. **Technical:** Adjust for *skew*
+
+---
+
+# Step 2: Univariate Viz
+
+- Why visualize both $Y$ and $X$?
 
 ```{r,warning=F,message=F}
 debt %>%
@@ -386,7 +402,11 @@ debt %>%
 
 ---
 
-# Step 3: Multivariate Viz
+# Step 3: Multivariate 
+
+- Eyeball the relationship first!
+
+--
 
 ```{r,warning=F,message=F}
 debt %>%
@@ -403,8 +423,7 @@ debt %>%
 ```{r,warning=F,message = F}
 debt %>%
   ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + 
-  geom_point() + 
-  geom_smooth(method = 'lm',se = F)
+  geom_point() + geom_smooth(method = 'lm',se = F)
 ```
 
 ---
