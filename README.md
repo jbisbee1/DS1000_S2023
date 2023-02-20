@@ -279,7 +279,7 @@ Lecture Content (2023/02/13): Multivariate Part 3 - Uncertainty and bootstrappin
 Lecture Content (2023/02/20): Regression Part 1 - The concept of a linear regression
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part1_slides.html#1)
-* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2732740/View)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2736703/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/lecture_notes_02_20_2023.Rmd)
 * Homework (due 2023/02/22): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part1_hw.Rmd)
 * **Problem Set 5 (due 2023-02-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_PS5.Rmd)
