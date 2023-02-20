@@ -279,6 +279,8 @@ Lecture Content (2023/02/13): Multivariate Part 3 - Uncertainty and bootstrappin
 Lecture Content (2023/02/20): Regression Part 1 - The concept of a linear regression
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part1_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2732740/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/lecture_notes_02_20_2023.Rmd)
 * Homework (due 2023/02/22): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part1_hw.Rmd)
 * **Problem Set 5 (due 2023-02-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_PS5.Rmd)
 
@@ -296,8 +298,9 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 ### 6\. Midterm Exam
 
 **Review Session (2023/03/06): Review of first half of semester.**
+* Previous Midterm: [F2022](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_F2022_midterm_exam_AK.pdf)
 
-**Midterm Exam (2023/03/08)**: Assigned 2023/03/06, due 2023/03/10 to Brightspace.
+**Midterm Exam (2023/03/08)**: Assigned 2023/03/06, due 2023/03/10 by 11:59PM to Brightspace.
 
 **Spring Break (2023/03/13)**
 

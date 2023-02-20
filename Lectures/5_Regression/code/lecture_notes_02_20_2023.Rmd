@@ -1,0 +1,52 @@
+---
+title: "lecture Notes 2/20"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+require(tidyverse)
+
+debt <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/sc_debt.Rds?raw=true')
+
+debt
+```
+
+# Multivariate
+
+```{r}
+debt %>%
+  ggplot(aes(x = sat_avg,
+             y = md_earn_wne_p6)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+# Running a Regression
+
+```{r}
+model_earn_sat <- lm(formula = md_earn_wne_p6 ~ sat_avg,
+                     data = debt)
+
+summary(model_earn_sat)
+```
+
+```{r}
+summary(debt %>% select(adm_rate,md_earn_wne_p6))
+```
+
+```{r}
+
+
+
+```
+
+
+
