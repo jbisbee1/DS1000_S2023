@@ -189,7 +189,8 @@ Lecture Content (2023/01/09): Welcome to the world of data science!
 
 Lecture Content (2023/01/11): Part 1 - Install and open `R`, packages, `tidyverse`
 
-* Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_slides.html#1); [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2693128/View)
+* Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2693128/View)
 * Homework (due 2023/01/16): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_hw.pdf);  [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part1_hw.Rmd)
 * Data: [sc_debt.Rds](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/data/sc_debt.Rds)
 
@@ -198,20 +199,20 @@ Lecture Content (2023/01/11): Part 1 - Install and open `R`, packages, `tidyvers
 Lecture Content (2023/01/18): Part 2 - Objects, functions, and `<-`
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_slides.html#1)
-* Homework (due 2023/01/23): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_hw.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2705775/View)
+* Homework (due 2023/01/23): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part2_hw.Rmd)
 
 Lecture Content (2023/01/23): Part 3 - Visualization in `R`
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_slides.html#1)
-* Homework (due 2023/01/30): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2710468/View)
+* Homework (due 2023/01/30): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
 * **Problem Set 1 (due 2023-01-27 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Problem_Set_1.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Problem_Set_1_AK.pdf)
 
 **Review Session (2023/01/25): Review of Intro to `R` section.**
 * In-Class Notes: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/example_rmd_for_pdf.Rmd)
-* Homework (same as Monday): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2713402/View)
+* Homework (same as Monday): [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.pdf); [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/code/Intro_to_R_Part3_hw.Rmd)
 
 *[Back to ToC](#table-of-contents)*
 
@@ -220,12 +221,12 @@ Lecture Content (2023/01/23): Part 3 - Visualization in `R`
 Lecture Content (2023/01/30): Replicability in `R`, tabular data
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#1)
-* Homework (due 2023/02/01): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_hw.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2717639/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/lecture_notes_1_30_2023.Rmd)
+* Homework (due 2023/02/01): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/Data_Wrangling_hw.Rmd)
 * **Problem Set 2 (due 2023-02-04 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd), [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/3_Data_Wrangling_PS2.Rmd)
 * Data: [Two versions of exit polls](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data)
 * Data: [NBA data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/3_Data_Wrangling/data/nba_players_2018.Rds)
-* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2717639/View)
 
 
 *[Back to ToC](#table-of-contents)*
@@ -235,40 +236,40 @@ Lecture Content (2023/01/30): Replicability in `R`, tabular data
 Lecture Content (2023/02/01): Univariate - Summaries of a single variable
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_slides.html#1)
-* Homework (due 2023/02/06): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_hw.Rmd)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_01_2023.Rmd)
-* Data: [Basketball Data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/4_Uni_Multivariate/data)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2720132/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_01_2023.Rmd)
+* Homework (due 2023/02/06): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Univariate_Analysis_hw.Rmd)
+* Data: [Basketball Data](https://github.com/jbisbee1/DS1000_S2023/tree/main/Lectures/4_Uni_Multivariate/data)
 
 Lecture Content (2023/02/06): Multivariate Part 1 - Summaries of multiple variables
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part1_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2724236/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_06_2023.Rmd)
 * Homework (due 2023/02/08): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part1_hw.Rmd)
 * Data: [Michigan Survey (prepped)](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/MI2020_ExitPoll_small.rds); [Presidential Vote](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/Pres2020_PV.Rds)
 * **Problem Set 3 (due 2023-02-10 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS3.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/3_Data_Wrangling/code/4_Uni_Multivariate_PS3_AK.Rmd)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_06_2023.Rmd)
-* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2724236/View)
 
 
 Lecture Content (2023/02/08): Multivariate Part 2 - Visualizations of multiple variables
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part2_slides.html#1)
-* Homework (due 2023/02/13): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part2_hw.Rmd)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_08_2023.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2726934/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_08_2023.Rmd)
+* Homework (due 2023/02/13): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part2_hw.Rmd)
 
 Lecture Content (2023/02/13): Multivariate Part 3 - Uncertainty and bootstrapping
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.html#1)
-* Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_13_2023.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2730311/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_13_2023.Rmd)
+* Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
 * **Problem Set 4 (due 2023-02-17 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS4.Rmd)
 
 **Review Session (2023/02/15): Review of Uni & Multivariate section.**
-* Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Review_notes_02_15_2023.Rmd)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2732740/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Review_notes_02_15_2023.Rmd)
+* Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
 
 *[Back to ToC](#table-of-contents)*
 
