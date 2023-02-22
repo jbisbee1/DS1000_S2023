@@ -1,0 +1,181 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Opening the movie data
+
+```{r}
+require(tidyverse)
+
+mv <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/mv.Rds?raw=true')
+```
+
+# Follow the process: Look
+
+````{r}
+glimpse(mv)
+```
+
+```{r}
+summary(mv %>% select(gross,budget))
+```
+
+# Univariate Visualization
+
+```{r}
+mv %>%
+  ggplot(aes(x = gross)) + 
+  geom_density()
+
+mv %>%
+  select(gross,budget) %>%
+  drop_na() %>%
+  gather(metric,dollars) %>%
+  ggplot(aes(x = dollars,color = metric)) + 
+  geom_density()
+```
+
+
+```{r}
+mv <- mv %>%
+  mutate(gross_log = log(gross),
+         budget_log = log(budget))
+
+
+mv %>%
+  select(gross_log,budget_log) %>%
+  drop_na() %>%
+  gather(metric,dollars) %>%
+  ggplot(aes(x = dollars,color = metric)) + 
+  geom_density()
+```
+
+
+# The actual regression
+
+```{r}
+model_gross_budget <- lm(formula = gross_log ~ budget_log,
+                         data = mv)
+
+summary(model_gross_budget)
+```
+
+
+# Extracting the Errors
+
+```{r}
+mv_analysis <- mv %>% drop_na(gross_log,budget_log)
+
+m <- lm(formula = gross_log ~ budget_log,
+        data = mv_analysis)
+summary(m)
+
+# Predicted values
+mv_analysis$predictions <- predict(m)
+
+mv_analysis$errors <- mv_analysis$gross_log - mv_analysis$predictions
+
+# # What if we don't drop_na()?
+# m <- lm(formula = gross_log ~ budget_log,
+#         data = mv)
+# summary(m)
+# 
+# # Predicted values
+# mv$predictions <- predict(m)
+# 
+# mv$errors <- mv$gross_log - mv$predictions
+
+
+mv_analysis %>%
+  select(errors,predictions,gross_log)
+
+
+# Univariate visualization of the errors
+mv_analysis %>%
+  ggplot(aes(x = errors)) + 
+  geom_histogram()
+
+
+mean(mv_analysis$errors)
+```
+
+# Calculate RMSE
+
+```{r}
+e <- mv_analysis$gross_log - mv_analysis$predictions
+se <- e^2
+mse <- mean(se)
+rmse <- sqrt(mse)
+
+# Predict how much much a $10m investment wil lmake
+pred <- 1.26 + .96*log(10000000)
+scales::dollar(exp(pred))
+
+# Lower bound
+scales::dollar(exp(pred - rmse))
+
+# Upper bound
+scales::dollar(exp(pred + rmse))
+```
+
+
+# Cross Validation
+
+```{r}
+# random set of row numbers
+inds <- sample(x = 1:nrow(mv_analysis),
+               size = round(nrow(mv_analysis)/2),
+               replace = F)
+
+# Create training and test sets
+train <- mv_analysis %>% slice(inds)
+test <- mv_analysis %>% slice(-inds)
+
+# Run model
+mTmp <- lm(gross_log ~ budget_log,data = train)
+summary(mTmp)
+
+# Calculate RMSE
+test$preds <- predict(mTmp,newdata = test)
+
+e <- test$gross_log - test$preds
+se <- e^2
+mse <- mean(se)
+rmse <- sqrt(mse)
+
+# Put in a loop
+set.seed(123)
+rmseRes <- NULL
+for(i in 1:10) {
+ # random set of row numbers
+inds <- sample(x = 1:nrow(mv_analysis),
+               size = round(nrow(mv_analysis)/2),
+               replace = F)
+# Create training and test sets
+train <- mv_analysis %>% slice(inds)
+test <- mv_analysis %>% slice(-inds)
+# Run model
+mTmp <- lm(gross_log ~ budget_log,data = train)
+
+# Calculate RMSE
+test$preds <- predict(mTmp,newdata = test)
+
+e <- test$gross_log - test$preds
+se <- e^2
+mse <- mean(se)
+rmse <- sqrt(mse)
+
+rmseRes <- c(rmseRes,rmse) 
+}
+
+mean(rmseRes)
+```
+
+
