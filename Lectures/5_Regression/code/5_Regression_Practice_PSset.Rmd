@@ -1,0 +1,90 @@
+---
+title: "Practice Problem Set"
+subtitle: "Regression"
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Getting Set Up
+
+Open `RStudio` and create a new RMarkDown file (`.Rmd`) by going to `File -> New File -> R Markdown...`.
+Accept defaults and save this file as `[LAST NAME]_psEC1.Rmd` to your `code` folder.
+
+Copy and paste the contents of this file into your `[LAST NAME]_psEC1.Rmd` file. Then change the `author: [YOUR NAME]` (line 4) to your name.
+
+All of the following questions should be answered in this `.Rmd` file. There are code chunks with incomplete code that need to be filled in. 
+
+This problem set is only for review purposes. You are not expected to complete this, and you will not be graded on it.  Nevertheless, I encourage you all to at least look over this problem set, as it embodies the style of questions that will be asked on the midterm. It can be a useful tool to help you prepare. I will share the answer key on March 3rd, 2023. To get the most out of this resource, attempt to complete the content prior to seeing the answer key, and make sure to ask questions about parts that you don't understand!
+
+## Question 0
+Require `tidyverse` and load the [`mv.Rds`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/mv.Rds?raw=true') data to an object called `movies`. (Tip: use the `read_rds()` function with the link to the raw data.)
+```{r}
+# INSERT CODE HERE
+#https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/mv.Rds?raw=true
+```
+
+
+## Question 1
+Which movie genres make the most money at the box office? To answer this question, begin by **looking** at the data. Specifically, create a univariate visualization of the `genre` category. Which categories appear the most? Which appear the least?
+
+```{r}
+# INSERT CODE HERE
+```
+
+## Question 2
+Drop any genre that appears fewer than 10 times in the data. Now plot a multivariate visualization comparing `genre` with `gross`. Which `genre` has the highest grossing movies (on average)?
+
+```{r}
+# INSERT CODE HERE
+```
+
+## Question 3
+Estimate a regression that predicts `gross` as a function of `genre`, dropping any genre that appears fewer than 10 times. Make sure to `log()` the outcome! What is the hold-out category? Which genres are you more than 95% confident make **more** money than this category? Which genres are you 95% confident make **less** money than this category?
+
+```{r}
+# INSERT CODE HERE
+```
+
+## Question 4
+Now add the budget (logged) to this regression. Again, what is the hold-out category? Which genres are you more than 95% confident make **more** money than this category? Which genres are you 95% confident make **less** money than this category?
+
+```{r}
+# INSERT CODE HERE
+```
+
+## Question 5
+Let's consider some other predictors: length (`runtime`), audience score (`score`), budget (`budget`), and rating (`rating`). Visualize each of these with a univariate visualization. Do you see any with sufficient skew to justify a log transformation?
+
+```{r}
+# INSERT CODE HERE
+```
+
+## Question 6
+Apply the log transformation to the variable(s) that you identified, and drop any movies that weren't rated G, PG, PG-13, and R. Now run regressions predicting `log_gross` with each of these variables one-by-one (`genre`,`score`,`runtime`,`rating`,`budget` [logged?]), and calculate the RMSE with 20-fold cross validation with an 80-20 split. **HINT**: make sure to `group_by(rating,genre)` prior to `sample_n`, and use the `anti_join()` solution to creating the `train` and `test` sets (see the notes from the 03/01 review session). Which variable best predicts `log_gross`? Visualize your answer with `geom_violin()`. **HINT #2**: You can put every regression inside a single `for()` loop to save time (i.e., instead of running `for()` loops for each variable).
+
+```{r,message=F}
+# INSERT CODE HERE
+```
+
+## Question 7
+
+Now run a single regression in which `log_gross` is predicted as a function of all of the preceding predictors. Calculate the RMSE with 100-fold cross validation, again with an 80-20 split. Does the model fit improve relative to the best-performing single predictor from above?
+
+```{r,message=FALSE}
+# INSERT CODE HERE
+```
+
+## Question 8
+
+Re-estimate the preceding multiple regression model on the full data. Then use it to generate a prediction for an investor wanting to know how much money they will make if they invest $50m in a fantasy movie, rated PG, with a 120 minute run-time and an audience score of 8. Use the RMSE estimate from the preceding question to give the lower and upper bounds on this prediction. Would you recommend that the investor invest in this project?
+
+```{r}
+# INSERT CODE HERE
+```
