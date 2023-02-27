@@ -4,7 +4,7 @@
     <title>Regression</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -27,7 +27,7 @@ class: center, middle, inverse, title-slide
 ]
 .date[
 ### Lecture Date: 2023/02/27
-Slides Updated: 2023-02-26
+Slides Updated: 2023-02-27
 ]
 
 ---
@@ -222,7 +222,7 @@ pClean + geom_smooth(method = 'lm')
 ```
 
 ```
-## `geom_smooth()` using formula = 'y ~ x'
+## `geom_smooth()` using formula 'y ~ x'
 ```
 
 &lt;img src="Regression_part3_slides_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
@@ -281,25 +281,24 @@ mv %&gt;%
 
 ```
 ## # A tibble: 3,179 × 24
-##    title     rating genre  year relea…¹ score  votes direc…²
-##    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-##  1 Almost F… R      Adve…  2000 Septem…   7.9 2.6 e5 Camero…
-##  2 American… R      Come…  2000 April …   7.6 5.14e5 Mary H…
-##  3 Gladiator R      Acti…  2000 May 5,…   8.5 1.4 e6 Ridley…
-##  4 Requiem … Unrat… Drama  2000 Decemb…   8.3 7.86e5 Darren…
-##  5 Memento   R      Myst…  2000 May 25…   8.4 1.2 e6 Christ…
-##  6 Cast Away PG-13  Adve…  2000 Decemb…   7.8 5.42e5 Robert…
-##  7 Scary Mo… R      Come…  2000 July 7…   6.2 2.38e5 Keenen…
-##  8 The Perf… PG-13  Acti…  2000 June 3…   6.4 1.6 e5 Wolfga…
-##  9 Coyote U… PG-13  Come…  2000 August…   5.7 1.08e5 David …
-## 10 X-Men     PG-13  Acti…  2000 July 1…   7.4 5.82e5 Bryan …
-## # … with 3,169 more rows, 16 more variables: writer &lt;chr&gt;,
-## #   star &lt;chr&gt;, country &lt;chr&gt;, budget &lt;dbl&gt;, gross &lt;dbl&gt;,
-## #   company &lt;chr&gt;, runtime &lt;dbl&gt;, id &lt;dbl&gt;, imdb_id &lt;chr&gt;,
-## #   bechdel_score &lt;dbl&gt;, boxoffice_a &lt;dbl&gt;, language &lt;chr&gt;,
-## #   gross_log &lt;dbl&gt;, budget_log &lt;dbl&gt;, errors_manual &lt;dbl&gt;,
-## #   errors_resid &lt;dbl&gt;, and abbreviated variable names
-## #   ¹​released, ²​director
+##    title   rating genre  year released score  votes director
+##    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
+##  1 Almost… R      Adve…  2000 Septemb…   7.9 2.6 e5 Cameron…
+##  2 Americ… R      Come…  2000 April 1…   7.6 5.14e5 Mary Ha…
+##  3 Gladia… R      Acti…  2000 May 5, …   8.5 1.4 e6 Ridley …
+##  4 Requie… Unrat… Drama  2000 Decembe…   8.3 7.86e5 Darren …
+##  5 Memento R      Myst…  2000 May 25,…   8.4 1.2 e6 Christo…
+##  6 Cast A… PG-13  Adve…  2000 Decembe…   7.8 5.42e5 Robert …
+##  7 Scary … R      Come…  2000 July 7,…   6.2 2.38e5 Keenen …
+##  8 The Pe… PG-13  Acti…  2000 June 30…   6.4 1.6 e5 Wolfgan…
+##  9 Coyote… PG-13  Come…  2000 August …   5.7 1.08e5 David M…
+## 10 X-Men   PG-13  Acti…  2000 July 14…   7.4 5.82e5 Bryan S…
+## # … with 3,169 more rows, and 16 more variables:
+## #   writer &lt;chr&gt;, star &lt;chr&gt;, country &lt;chr&gt;, budget &lt;dbl&gt;,
+## #   gross &lt;dbl&gt;, company &lt;chr&gt;, runtime &lt;dbl&gt;, id &lt;dbl&gt;,
+## #   imdb_id &lt;chr&gt;, bechdel_score &lt;dbl&gt;, boxoffice_a &lt;dbl&gt;,
+## #   language &lt;chr&gt;, gross_log &lt;dbl&gt;, budget_log &lt;dbl&gt;,
+## #   errors_manual &lt;dbl&gt;, errors_resid &lt;dbl&gt;
 ```
 
 ```r
@@ -333,6 +332,8 @@ mv %&gt;%
 ```
 
 &lt;img src="Regression_part3_slides_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
 
 # Step 5.3: Cross Validated RMSE
 

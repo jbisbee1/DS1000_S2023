@@ -1,0 +1,112 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-02-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,message=F}
+require(tidyverse)
+
+mv <- read_rds('../data/mv.Rds')
+```
+
+
+
+# Gross ~ score RMSE
+
+```{r}
+mv_analysis <- mv %>%
+  mutate(gross_log = log(gross),
+         budget_log = log(budget)) %>%
+  select(gross_log,budget_log,score) %>%
+  drop_na()
+
+m <- lm(formula = gross_log ~ score,
+        data = mv_analysis)
+
+summary(m)
+```
+
+```{r}
+mv_analysis <- mv_analysis %>%
+  mutate(preds = predict(m))
+
+e <- mv_analysis$gross_log - mv_analysis$preds
+se <- e^2
+mse <- mean(se,na.rm=T)
+rmse <- sqrt(mse)
+```
+
+# Calculate Cross Validated RMSE
+
+```{r}
+set.seed(123)
+rmseRes <- NULL
+for(i in 1:100) {
+  inds <- sample(x = 1:nrow(mv_analysis),
+                 size = round(nrow(mv_analysis)*.8),
+                 replace = F)
+  train <- mv_analysis %>% slice(inds)
+  test <- mv_analysis %>% slice(-inds)
+  m <- lm(formula = gross_log ~ score,
+          data = train)
+  e <- resid(m)
+  se <- e^2
+  mse <- mean(se,na.rm=T)
+  rmse <- sqrt(mse)
+
+  rmseRes <- c(rmseRes,rmse)
+  
+}
+mean(rmseRes)
+
+
+```
+
+
+# RMSE Combined: Method 1
+
+```{r}
+set.seed(123)
+rmseRes <- NULL
+for(i in 1:100) {
+  inds <- sample(1:nrow(mv_analysis),
+                 size = round(nrow(mv_analysis)/2),
+                 replace = F)
+  train <- mv_analysis %>% slice(inds)
+  test <- mv_analysis %>% slice(-inds)
+  mB <- lm(formula = gross_log ~ budget_log,train)
+  mS <- lm(formula = gross_log ~ score,train)
+  mC <- lm(formula = gross_log ~ budget_log + score,train)
+  rmseTmp <- test %>%
+    mutate(pB = predict(mB,newdata = test),
+           pS = predict(mS,newdata = test),
+           pC = predict(mC,newdata = test)) %>%
+    summarise(rmseB = sqrt(mean((gross_log - pB)^2)),
+              rmseS = sqrt(mean((gross_log - pS)^2)),
+              rmseC = sqrt(mean((gross_log - pC)^2)))
+  rmseRes <- rmseRes %>% bind_rows(rmseTmp)
+}
+
+rmseRes %>%
+  summarise_all(mean)
+
+rmseRes %>%
+  summarise(rmseB = mean(rmseB),
+            rmseS = mean(rmseS),
+            rmseC = mean(rmseC))
+```
+
+# Visualize the Result
+
+```{r}
+rmseRes %>%
+  gather(model,rmse) %>%
+  ggplot(aes(x = rmse,y = reorder(model,rmse))) + 
+  geom_violin()
+```

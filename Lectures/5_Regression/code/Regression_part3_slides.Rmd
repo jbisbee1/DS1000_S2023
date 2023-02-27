@@ -238,6 +238,8 @@ mv %>%
   geom_smooth()
 ```
 
+---
+
 # Step 5.3: Cross Validated RMSE
 
 ```{r}
