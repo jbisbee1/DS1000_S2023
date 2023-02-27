@@ -295,7 +295,7 @@ Lecture Content (2023/02/22): Regression Part 2 - Interpreting model output and 
 Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and categorical predictors
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part3_slides.html#1)
-* Practice Problem Set: [RMD]()
+* Practice Problem Set: [RMD](5_Regression_Practice_PSset.Rmd)
 
 **Review Session (2023/03/01): Review of Regression section.**
 
