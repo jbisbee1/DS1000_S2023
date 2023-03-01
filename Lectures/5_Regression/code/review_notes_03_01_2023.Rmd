@@ -1,0 +1,139 @@
+---
+title: "Regression Review"
+subtitle: ""
+author: "Prof Bisbee"
+institute: "Vanderbilt University"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+
+```{r,warning=FALSE,message = FALSE}
+# INSERT CODE HERE
+require(tidyverse)
+movies <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/mv.Rds?raw=true')
+
+glimpse(movies)
+
+
+# Look at the data
+movies %>%
+  select(bechdel_score,score)
+
+summary(movies %>% select(bechdel_score,score))
+
+# Plot missingness over time
+movies %>%
+  mutate(missing = ifelse(test = is.na(bechdel_score),
+                          yes = 1,
+                          no = 0)) %>%
+  group_by(year) %>%
+  summarise(propMissing = mean(missing,na.rm=T)) %>%
+  ggplot(aes(x = year,y = propMissing)) + 
+  geom_point()
+
+
+# Wrangle
+movies_analysis <- movies %>%
+  select(bechdel_score,score) %>%
+  drop_na()
+
+# Univariate Visualization: X
+movies_analysis %>%
+  ggplot(aes(x = bechdel_score)) + 
+  geom_bar() + 
+  labs(title = 'Univariate Visualization of X',
+       subtitle = 'Bechdel Score',
+       x = 'Bechdel Score',
+       y = 'Number of Movies')
+
+# Y
+movies_analysis %>%
+  ggplot(aes(x = score)) + 
+  geom_density() + 
+  labs(title = 'Univariate Visualization of Y',
+       subtitle = 'IMDB Score',
+       x = 'IMDB Score',
+       y = 'Density')
+
+
+# Multivariate
+movies_analysis %>%
+  ggplot(aes(x = factor(bechdel_score),y = score)) + 
+  geom_boxplot()
+
+movies_analysis %>%
+  ggplot(aes(x = bechdel_score,y = score)) + 
+  # geom_point() +
+  geom_jitter() + 
+  geom_smooth(method = 'lm')
+
+# Regression
+m <- lm(formula = score ~ bechdel_score,data = movies_analysis)
+
+summary(m)
+
+# Visualization of the errors
+movies_analysis <- movies_analysis %>%
+  mutate(predictions = predict(m,newdata = movies_analysis)) %>%
+  mutate(errors = score - predictions)
+
+movies_analysis %>%
+  ggplot(aes(x = errors)) + 
+  geom_histogram() + 
+  labs(title = 'Univariate Visualization of Errors',
+       subtitle = 'Regression of Score on Bechdel',
+       x = 'Model Error',
+       y = 'Number of Movies')
+
+# Multivariate Visualization of Errors
+movies_analysis %>%
+  ggplot(aes(x = bechdel_score,y = errors)) + 
+  # geom_point() + 
+  geom_jitter() + 
+  geom_smooth(method = 'lm')
+
+movies_analysis %>%
+  ggplot(aes(x = factor(bechdel_score),y = errors)) + 
+  geom_boxplot()
+
+# RMSE
+movies_analysis %>%
+  mutate(se = errors^2) %>%
+  summarise(mse = mean(se)) %>%
+  mutate(rmse = sqrt(mse))
+
+movies_analysis %>%
+  summarise(rmse = sqrt(mean(errors^2)))
+
+# Cross validation
+set.seed(123)
+cvRes <- NULL
+for(i in 1:100) {
+  train <- movies_analysis %>%
+    group_by(bechdel_score) %>%
+    sample_n(size = round(n()*.6),
+             replace = F)
+  
+  test <- movies_analysis %>%
+    anti_join(train)
+  
+  # Regression
+  m <- lm(formula = score~bechdel_score,data = train)
+  
+  cvRes <- cvRes %>%
+    bind_rows(test %>%
+    mutate(preds = predict(m,newdata = test)) %>%
+    mutate(errors = score - preds) %>%
+    summarise(rmse = sqrt(mean(errors^2))))
+}
+
+mean(cvRes$rmse)
+
+```
+

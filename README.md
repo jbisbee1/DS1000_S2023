@@ -300,6 +300,9 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 * Practice Problem Set: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_Practice_PSset.Rmd)
 
 **Review Session (2023/03/01): Review of Regression section.**
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2744668/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/review_notes_03_01_2023.Rmd)
+
 
 ### 6\. Midterm Exam
 
