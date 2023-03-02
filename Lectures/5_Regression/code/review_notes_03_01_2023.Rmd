@@ -116,12 +116,15 @@ set.seed(123)
 cvRes <- NULL
 for(i in 1:100) {
   train <- movies_analysis %>%
+    mutate(ind = row_number()) %>% # Something weird here! The anti_join() only returns a handful of rows so I added an index column
     group_by(bechdel_score) %>%
     sample_n(size = round(n()*.6),
-             replace = F)
+             replace = F) %>%
+    ungroup()
   
   test <- movies_analysis %>%
-    anti_join(train)
+    mutate(ind = row_number()) %>%
+    filter(!ind %in% train$ind)
   
   # Regression
   m <- lm(formula = score~bechdel_score,data = train)
@@ -134,6 +137,7 @@ for(i in 1:100) {
 }
 
 mean(cvRes$rmse)
+
 
 ```
 
