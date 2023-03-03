@@ -283,7 +283,7 @@ Lecture Content (2023/02/20): Regression Part 1 - The concept of a linear regres
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2736703/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/lecture_notes_02_20_2023.Rmd)
 * Homework (due 2023/02/22): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/Regression_part1_hw.Rmd)
-* **Problem Set 5 (due 2023-02-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_PS5.Rmd)
+* **Problem Set 5 (due 2023-02-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_PS5.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/code/5_Regression_PS5_AK.Rmd)
 
 Lecture Content (2023/02/22): Regression Part 2 - Interpreting model output and evaluating performance
 
