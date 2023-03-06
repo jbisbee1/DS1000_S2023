@@ -1,0 +1,221 @@
+---
+title: "Midterm Exam"
+subtitle: ""
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+date: "Due Date: 2023-03-10 by 11:59PM"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Overview
+
+This is your midterm exam. It consists of eight questions plus an additional extra credit question. In addition, there is an additional extra credit opportunity if you respond to a short survey about this course. The survey is not part of Vanderbilt's official teaching evaluations. I use it to help me improve the course in the second half of the semester, and respond to your specific needs. The survey is anonymous.
+
+## Grading
+
+Each question is worth 5 points, including the extra credit question and the survey. It is due by 11:59PM on Friday, March 10th. Five points will be deducted for each day late it is received. Submissions received after midnight on Sunday, March 12th will not be graded. 
+
+Please upload **two** versions of this midterm. The first is a PDF of the **knitted** output, just like your problem sets. The second is this `.Rmd` file in its raw form. An additional 5 points will be deducted for failing to submit in the correct format. 
+
+Make sure that the `.Rmd` and the `.pdf` files are named `[YOUR LAST NAME]_DS1000_midterm`.
+
+## Resources
+
+You are permitted to rely on any course resources from the first part of the Spring 2023 semester. These include all lecture slides, recordings, problem sets, answer keys, homeworks, and lecture notes, as well as any and all posts to Campuswire.
+
+Campuswire access will be restricted during the week of the midterm. You are only permitted to post clarifying questions about the exam, and these should only be made visible to the instructor and TAs. The graders, TAs, and the Professor will remove questions that ask for help on the contents of the exam.
+
+## Honor
+
+Unlike the problem sets, you are **prohibited** from working on this midterm together. You must digitally sign your name below, confirming that you did not collaborate on this exam with any of your classmates, share work, or otherwise discuss its contents. 
+
+## Question 0: Independent Work Statement
+Please sign your name in the space provided by typing out your full name in place of the underline:
+
+"I, __________________________________, am aware of the serious nature of plagiarism and affirm that I did not collaborate with other students while completing this midterm."
+
+
+## Codebook
+
+Questions 1 through 4 use the `sc_debt.Rds` dataset, the codebook for which is reproduced below:
+
+| Name           | Description                                                                                                                                                                                             |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| unitid         | Unit ID                                                                                                                                                                                                |
+| instnm         | Institution Name                                                                                                                                                                                       |
+| stabbr         | State Abbreviation                                                                                                                                                                                     |
+| grad_debt_mdn  | Median Debt of Graduates                                                                                                                                                                               |
+| control        | Control Public or Private                                                                                                                                                                              |
+| region         | Census Region                                                                                                                                                                                          |
+| preddeg        | Predominant Degree Offered: Associates or Bachelors                                                                                                                                                    |
+| openadmp       | Open Admissions Policy: 1= Yes, 2=No,3=No 1st time students                                                                                                                                            |
+| adm_rate       | Admissions Rate: proportion of applications accepted                                                                                                                                                   |
+| ccbasic        | Type of institution-- see [here](https://data.ed.gov/dataset/9dc70e6b-8426-4d71-b9d5-70ce6094a3f4/resource/658b5b83-ac9f-4e41-913e-9ba9411d7967/download/collegescorecarddatadictionary_01192021.xlsx) |
+| selective      | Institution admits fewer than 10 % of applicants, 1=Yes, 0=No                                                                                                                                          |
+| research_u     | Institution is a research university 1=Yes, 0=No                                                                                                                                                      |
+| sat_avg        | Average SAT Scores                                                                                                                                                                                     |
+| md_earn_wne_p6 | Average Earnings of Recent Graduates                                                                                                                                                                   |
+|ugds  | Number of undergraduates |
+
+## Question 1: 5 points
+
+Require `tidyverse` and load the [`sc_debt.Rds`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/data/sc_debt.Rds?raw=true) dataset from [`GitHub`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/2_Intro_to_R/data/sc_debt.Rds). 
+
+Do schools with open admissions policies (i.e., schools that do not require SAT or ACT scores for admission) have students with higher future earnings? How big is the difference?
+
+Before you calculate the answer to this question, **wrangle** the admissions policy variable to be `"open"` if the school has an open admissions policy, and `"not"` otherwise. **HINT**: see slide 39 in the [`Data_Wrangling_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#117) for help.
+
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 2: 5 points
+
+How confident are you in the conclusion drawn in question 1? Use 100 bootstrapped simulations with `size` set to the number of rows in the data to express your confidence. How large is the average difference across these bootstraps? **HINT**: see slide 30 in the [`Multivariate_Analysis_part3_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.html#82).
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 3: 5 points
+
+Let's look at missingness in our data. How many schools don't report their admissions policy? How many don't report the median earnings of future graduates? 
+
+Now investigate whether the missing data is associated with certain types of schools. Do schools that don't report future earnings have higher average SAT scores than the schools that do report future earnings? **HINT:** Create a new variable that is `"reported"` if the school reports future earnings, and `"missing"` otherwise. Again, slide 39 in the [`Data_Wrangling_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#117) is helpful.
+
+Finally, use bootstrapping with 100 simulations and `size` set to the number of rows in the data to express your confidence in your conclusion. 
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 4: 5 points
+
+Now let's re-analyze the relationship between admissions policy and future earnings via regression. Does this analysis change your answers to Questions 1 and 2 from above? **HINT**: see slide 36 in the [`Regression_part1_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part1_slides.html#92).
+
+Then calculate the RMSE using 100-fold cross validation with a 50-50 split, and interpret the result. **HINT**: see slide 44 in the [`Regression_part2_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part2_slides.html#132).
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 5: 5 points
+
+Now open a different dataset: the [`game_summary.Rds`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/game_summary.Rds?raw=true) dataset from [GitHub](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/data/game_summary.Rds). The codebook for this dataset is copied below. 
+
+| Name         |                                          Description |
+|--------------|-----------------------------------------------------:|
+| idGame       |                                       Unique game id |
+| yearSeason   | Which season? NBA uses ending year so 2016-17 = 2017 |
+| dateGame     |                                     Date of the game |
+| idTeam       |                                       Unique team id |
+| nameTeam     |                                            Team Name |
+| locationGame |                        Game location, H=Home, A=Away |
+| tov          |                                      Total turnovers |
+| pts          |                                         Total points |
+| treb         |                                       Total rebounds |
+| pctFG        |                                Field Goal Percentage |
+| teamrest     |               How many days since last game for team |
+| pctFT        |                                Free throw percentage |
+| isWin        |                                   Won? TRUE or FALSE |
+| ft_80        |      Team scored more than 80 percent of free throws |
+
+We are fundamentally interested in predicting the number of points a team scores as a function of three variables: turnovers, the location of the game, and how much rest the team has had prior to playing in this game. 
+
+To start, answer the following questions:
+
+1. Which variable is the outcome / dependent / $Y$ variable? Which are the $X$ variables?
+2. Is there any missingness in these data? 
+3. Create univariate visualizations of all three predictors and the outcome. Based on your visual analysis, do you see any reason to wrangle the data? Make sure to label your plots!
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 6: 5 points
+
+Let's start with the amount of rest the team has. Create a new version of this variable that is categorical, with one category for zero days of rest, one category for one day of rest, and one category for two or more days of rest. **HINT**: see slide 39 in the [`Data_Wrangling_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/3_Data_Wrangling/code/Data_Wrangling_slides.html#117) for help.
+
+Now create a multivariate visualization comparing this new variable to the total number of points. Based on the multivariate visualization, do teams with more rest appear to score more points than teams with less rest?
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 7: 5 points
+
+Now run a regression using these same variables. Do teams with more rest tend to score more points than teams with less rest? Evaluate your model via visual inspection of the univariate and multivariate errors. Is this a good regression model? **HINT**: see slides 25 through 28 in the [`Regression_part2_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part2_slides.html#65). 
+
+Finally, calculate the RMSE using 100-fold cross validation with an 80-20 split, and interpret the result.
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Question 8: 5 points
+
+Now run a combined regression where you predict the points scored as a function of the categorical days of rest variable you created in Q6, as well as the number of turnovers and the location of the game. Does this combined model perform better than the simple model used in Question 7? Use 100-fold cross validation with an 80-20 split to answer this question. 
+
+Finally, using this combined model, predict the number of points scored by a team playing at home with 5 turnovers and 1 day of rest, as well as the lower and upper bounds of your prediction. **HINT**: see slide 36 in the [`Regression_part2_slides.html`](https://www.jamesbisbee.com/DS1000_S2023/Lectures/5_Regression/code/Regression_part2_slides.html#103).
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Extra Credit #1: 5 EC points
+
+Open a new dataset that contains Donald Trump's tweets: the [`Trumptweets.Rds`](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/data/Trumptweets.Rds?raw=true) dataset from [GitHub](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/data/Trumptweets.Rds). The units of observation in this dataset (i.e., the rows) are every tweet written by Donald Trump. This dataset has the following variables:
+
+| Name         |                                          Description |
+|--------------|-----------------------------------------------------:|
+| tweet_id     |                                             Tweet ID |
+| content      |                                The text of the tweet |
+| date         |                       The date the tweet was written |
+| retweets     |    The total number of times the tweet was retweeted |
+| favorites    |    The total number of times the tweet was favorited |
+
+Now answer the following research question: did Donald Trump's popularity on Twitter increase after he announced his candidacy for president on June 19, 2016? Full extra credit will be based on the following rubric:
+
+* Write out a theory and hypothesis (1 point)
+* State which variables you will use, and indicate which is the outcome and which is the predictor (1 point)
+* Visualize the outcome and explanatory variable (1 point) **Tip: add +1 to any variables you think require a log transformation before taking the log.**
+* Run a regression and interpret the results (1 point)
+* Evaluate your model with univariate and multivariate visualization of the errors, and 100-fold cross validation with an 80-20 split (1 point)
+
+```{r}
+# INSERT CODE HERE
+```
+
+WRITE ANSWER HERE
+
+## Extra Credit #2: 5 EC Points
+
+Please complete this **anonymous** course evaluation. This does not influence Professor Bisbee's career or position in the university and will only be used to improve the course. You can find the anonymous survey [here](https://nyu.qualtrics.com/jfe/form/SV_b7t5vqhhbalgGZ8). Upon completing the survey, you will be given a completion code, which you should paste back at the end of your midterm below. 
+
+**NOTE**: There is only one completion code to ensure that all responses are anonymized and can't be linked back to the midterm exams. To prevent students from sharing the code with their friends to get the 5 extra credit points without completing the survey, these 5 points are only provided if the number of midterms with the completion code *exactly equals the number of survey responses*. In other words, if there are 150 exams with the completion code, but only 50 completed surveys, **all students will forfeit their extra credit points**. The purpose of this strict rule is to disincentivize the sharing of this code either by those who would fill out the survey and then share the code, or by those who would ask to be given the code without filling out the survey. 
+
+
+WRITE COMPLETION CODE HERE

@@ -1,0 +1,152 @@
+---
+title: "Midterm Review"
+subtitle: ""
+author: "Prof Bisbee"
+institute: "Vanderbilt University"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+
+```{r,warning=FALSE,message = FALSE}
+require(tidyverse)
+
+movies <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/5_Regression/data/mv.Rds?raw=true')
+```
+
+# Prediction
+
+```{r}
+glimpse(movies)
+
+log(100)
+log(10000)
+log(1)
+log(0)
+
+movies_analysis <- movies %>%
+  mutate(log_gross = log(gross+1)) %>%
+  select(log_gross,rating,score,runtime) %>%
+  drop_na()
+
+movies_analysis %>%
+  count(rating)
+
+movies_analysis <- movies_analysis %>%
+  filter(!rating %in% c('NC-17','TV-14','TV-MA','TV-PG'))
+
+m <- lm(formula = log_gross ~ rating + score + runtime,
+        data = movies_analysis)
+
+summary(m)
+
+# How much will I make if:
+#   - Rated R
+#   - 105 minutes
+#   - 5
+
+# Method 1: Pure Math
+# y = alpha + beta_1*rating + beta_2*runtime + beta_3*score
+scales::dollar(exp(15.3 + -2.92 + 0.028*105 + .19*5))
+
+
+# Methd 2: predict()
+test <- data.frame(rating = 'R',
+           runtime = 105,
+           score = 5)
+
+scales::dollar(exp(predict(m,newdata = test)))
+
+# RMSE:
+set.seed(123) # Ensure we get the same value every time
+cvRes <- NULL # Instantiating the empty object where we store the results
+for(i in 1:100) { # How we repeat the same code 100 times
+  inds <- sample(1:nrow(movies_analysis),                # Sample from the row numbers at random
+                 size = round(nrow(movies_analysis)*.8), # Size of the same for 80-20 split
+                 replace = F) # Ensures we don't have the same movie twice
+  
+  train <- movies_analysis %>% slice(inds) # Subset to the random rows
+  test <- movies_analysis %>% slice(-inds) # Subset to everything EXCEPT the random rows
+  
+  mTmp <- lm(formula = log_gross ~ rating + score + runtime, # Running model on the train data
+        data = train)
+  
+  cvRes <- cvRes %>%
+    bind_rows(test %>% # bind_rows() appends to the bottom of the cvRes object
+    mutate(preds = predict(mTmp,newdata = test)) %>% # Generate predicted values on test data
+    mutate(errors = log_gross - preds) %>% # Calculate errors as Y - predY
+    mutate(se = errors^2) %>% # Square the errors
+    summarise(rmse = sqrt(mean(se)))) # Calculate RMSE
+  
+}
+
+mean(cvRes$rmse)
+
+```
+
+# Multiple `ifelse()`
+
+```{r}
+movies %>%
+  mutate(genre_simplified = ifelse(genre == 'Action', # This is the first logical statement
+                                   'Action', # If the logic is TRUE, replace with 'Action'
+                                   ifelse(genre == 'Adventure', # If the first logic is FALSE, run a second ifelse() statement with new logic
+                                          'Adventure', # If the second logic is TRUE, replace with 'Adventure'
+                                          'All Others'))) %>% # If neither is TRUE, replace with 'All others'
+  count(genre_simplified)
+```
+
+# Bootstrap Example
+
+```{r}
+# Are G-rated movies shorter?
+
+movies_analysis %>%
+  ggplot(aes(x = rating,y = runtime)) + 
+  geom_boxplot()
+
+# Calculate the quantity of interest
+movies_analysis %>%
+  mutate(rating_simplified = ifelse(rating == 'G','G','Not G')) %>%
+  group_by(rating_simplified) %>%
+  summarise(runtime = mean(runtime,na.rm=T))
+
+
+mv_2 <- movies_analysis %>%
+  mutate(rating_simplified = ifelse(rating == 'G','G','Not G'))
+
+set.seed(123)
+bsRes <- NULL
+for(i in 1:100) {
+  
+  tmp <- mv_2 %>%
+    sample_n(size = nrow(mv_2),replace = T) %>%
+    group_by(rating_simplified) %>%
+    summarise(runtime = mean(runtime,na.rm=T),.groups = 'drop') %>%
+    mutate(bsIndex = i)
+  
+  bsRes <- bsRes %>% bind_rows(tmp)
+}
+
+bsRes %>%
+  spread(key = rating_simplified,value = runtime) %>%
+  mutate(diff = `Not G` - G) %>%
+  summarise(conf = mean(diff > 0),
+            avgDiff = mean(diff))
+
+
+# Spread function
+bsRes %>%
+  spread(key = rating_simplified,
+         value = runtime)
+
+
+```
+
+
+
