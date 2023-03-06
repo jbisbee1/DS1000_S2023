@@ -310,6 +310,7 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 * Previous Midterm: [F2022](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_F2022_midterm_exam_AK.pdf)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2749907/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/midterm_review_notes.Rmd)
+* [Midterm Exam](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_midterm.Rmd)
 
 **Midterm Exam (2023/03/08)**: Assigned 2023/03/06, due 2023/03/10 by 11:59PM to Brightspace.
 
