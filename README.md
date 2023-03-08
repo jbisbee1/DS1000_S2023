@@ -262,7 +262,7 @@ Lecture Content (2023/02/13): Multivariate Part 3 - Uncertainty and bootstrappin
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_slides.html#1)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2730311/View)
-* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_notes_02_13_2023.Rmd)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/lecture_02_13_2023_notes.Rmd)
 * Homework (due 2023/02/20): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/Multivariate_Analysis_part3_hw.Rmd)
 * **Problem Set 4 (due 2023-02-17 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS4.Rmd)
 [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/4_Uni_Multivariate/code/4_Uni_Multivariate_PS4_AK.pdf)
