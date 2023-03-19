@@ -155,9 +155,9 @@ All these can also be found on the [Campuswire calendar](https://campuswire.com/
 
 [6. Midterm](#6-midterm-exam)
 
-[7. Classification](#5-classification)
+[7. Classification](#7-classification)
 
-[8. Clustering, Text, Twitter & Sentiment](#9-clustering--nlp)
+[8. Clustering, Text, Twitter & Sentiment](#8-clustering--nlp)
 
 [9. Advanced Topics in Data Science](#9-advanced-topics-in-data-science)
 
