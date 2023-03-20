@@ -325,6 +325,8 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 Lecture Content (2023/03/20): Classification Part 1 - The concept of a logistic Classification
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/7_Classification/code/Classification_part1_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2760407/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_20_2023.Rmd)
 * Homework (due 2023/03/22): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_parts_1_and_2_hw.Rmd)
 * **Problem Set 6 (due 2023-03-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_problem_set_6.Rmd)
 
