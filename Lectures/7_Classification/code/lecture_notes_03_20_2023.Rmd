@@ -1,0 +1,121 @@
+---
+title: "Lecture notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(scales)
+ad<-read_rds("https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/data/admit_data.rds?raw=true")%>%ungroup()
+glimpse(ad)
+```
+
+```{r}
+ad %>%
+  summarise(YieldRate = mean(yield))
+```
+```{r}
+ad %>%
+  group_by(legacy) %>%
+  summarise(prob_attend = mean(yield))
+
+# do this for visit & sent_scores
+```
+
+
+# Heatmap
+
+- `ntile()` function
+```{r}
+toplot <- ad %>%
+  mutate(sat_decile = ntile(sat,n = 10)) %>% # bin the SAT score into 10 equally sized bins
+  group_by(sat_decile,legacy) %>%
+  summarise(prob_attend = mean(yield)) %>% # calculate average yield by sat bin and legacy
+  ungroup()
+
+toplot %>%
+  ggplot(aes(x = factor(legacy),y = factor(sat_decile),fill = prob_attend)) + 
+  geom_tile() + 
+  scale_fill_gradient(low = "gray80",high = 'darkred')
+  
+```
+
+# Conditional Means
+
+```{r}
+ad <- ad %>%
+  mutate(sat_decile = ntile(sat,n= 10)) %>%
+  group_by(sat_decile,legacy) %>%
+  mutate(prob_attend = mean(yield)) %>%
+  ungroup() %>%
+  # select(sat_decile,legacy,yield,prob_attend) %>%
+  mutate(pred_attend = ifelse(prob_attend > .5,1,0))
+
+ad %>%
+  select(yield,pred_attend,prob_attend)
+```
+
+
+
+# Calculate Sensitivity & Specificity
+
+```{r}
+ad %>%
+  group_by(yield) %>%
+  mutate(total_attend = n()) %>% # calculate total students who did (1) and did not (0) attend
+  group_by(yield,total_attend,pred_attend) %>%
+  summarise(nStudents = n()) %>% # Calculate total students by yield and by prediction
+  mutate(proportion = nStudents / total_attend) # Transform into proportion
+```
+
+# Linear Regression Model
+
+```{r}
+mLM <- lm(yield ~ sat + net_price + legacy,ad)
+summary(mLM)
+```
+
+```{r}
+ad %>%
+  mutate(prob_attend = predict(mLM)) %>% # Predict regression to get probabilities
+  mutate(pred_attend = ifelse(prob_attend > .5,1,0)) %>% # Convert probabilities to 0's & 1's
+  group_by(yield) %>%
+  mutate(total_attend = n()) %>% # Calculate total students who did and did not attend
+  group_by(yield,pred_attend,total_attend) %>%
+  summarise(nStudents = n()) %>% # Calculate total students who were accurately & inaccurately predicted
+  ungroup() %>%
+  mutate(proportion = nStudents / total_attend) # Calculate proportion
+```
+```{r}
+(282 + 1353) / 2150
+```
+
+# Looping over thresholds
+
+```{r}
+threshRes <- NULL
+for(thresh in seq(0,1,by = .025)) {
+  tmp <- ad %>%
+    mutate(pred_attend = ifelse(predict(mLM) > thresh,1,0)) %>%
+    group_by(yield) %>%
+    mutate(total_attend = n()) %>%
+    group_by(yield,pred_attend,total_attend) %>%
+    summarise(nStudents = n(),.groups = 'drop') %>%
+    mutate(proportion = nStudents / total_attend) %>%
+    mutate(threshold = thresh)
+  
+  threshRes <- threshRes %>%
+    bind_rows(tmp)
+}
+
+threshRes
+
+```
+
+
