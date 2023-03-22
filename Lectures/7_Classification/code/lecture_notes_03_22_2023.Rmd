@@ -1,0 +1,94 @@
+---
+title: "Classification Part 2"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-03-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 14 password: 1423
+
+
+```{r}
+require(tidyverse)
+require(tidymodels)
+ad <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/data/admit_data.rds?raw=true')
+
+# Run regression
+mLM <- lm(yield ~ sat + net_price + legacy,data = ad)
+
+# Evaluate output
+ad %>%
+  mutate(pred_attend = ifelse(predict(mLM) > .75,1,0)) %>%
+  group_by(yield) %>%
+  mutate(total_attend = n()) %>%
+  group_by(yield,pred_attend,total_attend) %>%
+  summarise(nStudents=n(),.groups = 'drop') %>%
+  mutate(prop = percent(nStudents / total_attend)) %>%
+  ungroup() 
+
+# Loop over threshold values
+threshRes <- NULL
+for(thresh in seq(0,1,by = 0.025)) {
+  tmp <- ad %>%
+  mutate(pred_attend = ifelse(predict(mLM) > thresh,1,0)) %>%
+  group_by(yield) %>%
+  mutate(total_attend = n()) %>%
+  group_by(yield,pred_attend,total_attend) %>%
+  summarise(nStudents=n(),.groups = 'drop') %>%
+  mutate(prop = nStudents / total_attend) %>%
+  ungroup() %>%
+    mutate(threshold = thresh)
+  
+  threshRes <- threshRes %>%
+    bind_rows(tmp)
+}
+
+threshRes %>%
+  mutate(metric = ifelse(yield == 0 & pred_attend == 0,'Specificty',
+                         ifelse(yield == 1 & pred_attend == 1,'Sensitivity',NA))) %>%
+  drop_na(metric) %>%
+  ggplot(aes(x = threshold,y = prop,color = metric)) + 
+  geom_line() + 
+  geom_vline(xintercept = .65)
+
+# ROC Curve: Receiver Operator Characteristic Curve
+threshRes %>%
+  mutate(metric = ifelse(yield == 0 & pred_attend == 0,'Specificity',
+                         ifelse(yield == 1 & pred_attend == 1,'Sensitivity',NA))) %>%
+  drop_na(metric) %>%
+  select(prop,metric,threshold) %>%
+  spread(key = metric,value = prop) %>%
+  ggplot(aes(x = 1-Specificity,y = Sensitivity)) + 
+  geom_line() + 
+  geom_abline(slope = 1,intercept = 0,linetype = 'dotted')
+
+require(tidymodels)
+forAUC <- ad %>%
+  mutate(pred_enroll = predict(mLM)) %>%
+  select(yield,pred_enroll) %>%
+  mutate(yield2 = factor(yield,levels = c('1','0')))
+
+roc_auc(forAUC,yield2,pred_enroll)
+```
+
+# Logit Example
+
+```{r}
+mLG <- glm(formula = yield ~ sat + net_price + legacy,data = ad,family = binomial(link = "logit"))
+
+summary(mLG)
+
+# Skip straight to AUC calculation
+forAUC <- ad %>%
+  mutate(pred_yield = predict(mLG,type = 'response')) %>%
+  mutate(yield2 = factor(yield,levels = c('1','0')))
+
+roc_auc(forAUC,yield2,pred_yield)
+
+
+```
+

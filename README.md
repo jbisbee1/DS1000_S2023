@@ -333,6 +333,8 @@ Lecture Content (2023/03/20): Classification Part 1 - The concept of a logistic 
 Lecture Content (2023/03/22): Classification Part 2 - Interpreting model output and evaluating performance
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/7_Classification/code/Classification_part2_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2764617/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_22_2023.Rmd)
 * Homework (due 2023/03/27): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part3_hw.Rmd)
 
 Lecture Content (2023/03/27): Classification Part 3 - Using models for prediction
