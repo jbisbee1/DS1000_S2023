@@ -340,10 +340,12 @@ Lecture Content (2023/03/22): Classification Part 2 - Interpreting model output 
 Lecture Content (2023/03/27): Classification Part 3 - Using models for prediction
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/7_Classification/code/Classification_part3_slides.html#1)
-* Homework (due 2023/04/03): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part3_hw.Rmd)
-* **Problem Set 7 (due 2023-03-31 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/ds1000_problem_set_7.Rmd)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2767992/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_27_2023.Rmd)
+* **Problem Set 7 (due 2023-03-31 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS7.Rmd)
 
 **Review Session (2023/03/29): Review of Classification section.**
+* Homework (due 2023/04/03): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Clustering_part1_hw.Rmd)
 
 *[Back to ToC](#table-of-contents)*
 

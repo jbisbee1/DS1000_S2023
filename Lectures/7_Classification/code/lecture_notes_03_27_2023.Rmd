@@ -1,0 +1,148 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-03-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz Password: 9836
+
+
+# Getting Started
+
+```{r}
+require(tidyverse)
+require(tidymodels) # For roc_auc() function
+require(modelr) # For data_grid() function
+
+ad <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/data/admit_data.rds?raw=true')
+```
+
+# Run Logit
+
+```{r,warning=FALSE}
+mLG <- glm(formula = yield ~ sat + legacy + visit + registered + sent_scores + income + gpa + distance + net_price,data = ad,family = binomial(link = "logit"))
+
+# Evaluate model
+toEval <- ad %>%
+  mutate(prob_attend = predict(mLG,type = 'response'),
+         yield = factor(yield,levels = c('1','0')))
+
+roc_auc(data = toEval,truth = 'yield',estimate = 'prob_attend')
+
+# Cross validation to protect against overfitting
+set.seed(123)
+cvRes <- NULL
+for(i in 1:100) {
+  inds <- sample(1:nrow(ad),size = round(nrow(ad)*.8),replace = F) # Select random sample of row numbers
+  
+  train <- ad %>% slice(inds) # Using this random sample, divide into training set
+  test <- ad %>% slice(-inds) # Divide into test set
+  
+  mTmp <- glm(formula = yield ~ sat + legacy + visit + registered + sent_scores + income + gpa + distance + net_price,data = train,family = binomial(link = "logit")) # Estimate the logit regression
+  
+  # Evaluation Step
+  toEval <- test %>% # Prepare data for AUC calculation
+  mutate(prob_attend = predict(mTmp,newdata = test,type = 'response'), 
+         yield = factor(yield,levels = c('1','0')))
+
+  tmpAUC <- roc_auc(data = toEval,truth = 'yield',estimate = 'prob_attend') # Calculate AUC
+  
+  cvRes <- cvRes %>% # Append to cvRes object
+    bind_rows(tmpAUC %>%
+                mutate(cvIndicator = i))
+}
+
+mean(cvRes$.estimate)
+
+```
+
+# 1. Counterfactuals with data_grid()
+
+```{r}
+require(modelr)
+
+hypo_data <- ad %>%
+  data_grid(legacy = 0,
+            visit = 1,
+            registered = 1,
+            sent_scores = 1,
+            sat = 1400,
+            income = 95000,
+            gpa = 3.9,
+            distance = .1,
+            net_price = 6875)
+
+predict(mLG,newdata = hypo_data,type = 'response')
+
+
+hypo_data <- ad %>%
+  data_grid(legacy = 0,
+            visit = 1,
+            registered = 1,
+            sent_scores = 1,
+            sat = c(1400),
+            income = 95000,
+            gpa = 3.9,
+            distance = .1,
+            net_price = c(6875,25000))
+
+predict(mLG,newdata = hypo_data,type = 'response')
+
+
+```
+
+
+# 2. Consulting on policies
+
+- Reduce `net_price` by $5,000 for students with SAT scores >= 1300
+
+```{r}
+# Create hypothetical data with 1300+ students discounted
+hypo_data <- ad %>%
+  mutate(net_price = ifelse(sat >= 1300,0,net_price + 15000))
+
+# Predict probability + attendance based on model
+hypo_data <- hypo_data %>%
+  mutate(prob_attend = predict(mLG,newdata = hypo_data,type = 'response')) %>%
+  mutate(pred_attend = ifelse(prob_attend > .5,1,0))
+
+# Evaluate whether we achieved our goals
+hypo_data %>%
+  filter(pred_attend == 1) %>%
+  summarise(sat_avg = mean(sat,na.rm=T),
+            tot_rev = sum(net_price,na.rm=T),
+            tot_student = n())
+
+# Put it in a loop!
+hypoRes <- NULL
+for(discount in c(1000,5000,10000,20000)) { 
+  hypo_data <- ad %>%
+  mutate(net_price = ifelse(sat >= 1300,net_price - discount,net_price + discount))
+
+# Predict probability + attendance based on model
+hypo_data <- hypo_data %>%
+  mutate(prob_attend = predict(mLG,newdata = hypo_data,type = 'response')) %>%
+  mutate(pred_attend = ifelse(prob_attend > .5,1,0))
+
+# Evaluate whether we achieved our goals
+tmp <- hypo_data %>%
+  filter(pred_attend == 1) %>%
+  summarise(sat_avg = mean(sat,na.rm=T),
+            tot_rev = sum(net_price,na.rm=T),
+            tot_student = n())
+
+hypoRes <- hypoRes %>%
+  bind_rows(tmp %>%
+              mutate(discount = discount))
+}
+PW: 9836
+
+
+```
+
+
