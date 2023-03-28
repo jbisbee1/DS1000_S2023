@@ -68,7 +68,20 @@ The final grade is calculated as a weighted average of these components with the
 - **Exams:** Midterm and final, both of which are take-home. These must be completed *independently*, and are each worth 20% of your final grade, comprising 40% of your final grade. 
 - **Quizzes:** There are 20 quizzes over the course of the semester which can only be taken if you attend class. Each consist of five questions plus an honor statement. 50% of the quiz grade comes from accurately answering all five questions, and 50% comes from signing the honor statement. Each quiz is worth 1% of your final grade, and combined comprise the final 20%.
 	
-Both problem sets and exams will have opportunities to earn extra credit, theoretically meaning you could score above 100%. All grades are curved without taking the extra credit results into consideration. 
+Both problem sets and exams will have opportunities to earn extra credit, theoretically meaning you could score above 100%. All grades are curved without taking the extra credit results into consideration. We follow the standard Vanderbilt grading system, reproduced below:
+
+- A: 94+
+- A-: 90-93
+- B+: 87-89
+- B: 84-86
+- B-: 80-83
+- C+: 77-79
+- C: 74-76
+- C-: 70-73
+- D+: 67-69
+- D: 64-66
+- D-: 60-63
+- F: <60
 
 *[Back to ToC](#table-of-contents)*
 
