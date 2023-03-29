@@ -358,6 +358,8 @@ Lecture Content (2023/03/27): Classification Part 3 - Using models for predictio
 * **Problem Set 7 (due 2023-03-31 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS7.Rmd)
 
 **Review Session (2023/03/29): Review of Classification section.**
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2770682/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_29_2023.Rmd)
 * Homework (due 2023/04/03): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Clustering_part1_hw.Rmd)
 
 *[Back to ToC](#table-of-contents)*

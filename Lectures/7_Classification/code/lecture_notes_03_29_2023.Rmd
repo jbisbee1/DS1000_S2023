@@ -1,0 +1,79 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+require(tidymodels) # For roc_auc() function
+require(modelr) # For data_grid() function
+
+ad <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/data/admit_data.rds?raw=true')
+```
+
+# Comparing Two Specifications
+
+```{r}
+form1 <- 'yield ~ net_price + sat + gpa'
+form2 <- 'yield ~ net_price + sat + gpa + distance + legacy'
+
+m1 <- glm(formula = form1,data = ad,family = binomial(link = "logit"))
+summary(m1)
+
+m2 <- glm(formula = form2,data = ad,family = binomial(link = "logit"))
+summary(m2)
+
+# Evaluate based on full data
+toEval <- ad %>%
+  mutate(prob1 = predict(m1,type = 'response'),
+         prob2 = predict(m2,type = 'response'),
+         yield = factor(yield,levels = c('1','0')))
+
+roc_auc(toEval,'yield','prob1')
+roc_auc(toEval,'yield','prob2')
+
+# Cross Validation
+set.seed(123)
+cvRes <- NULL
+for(i in 1:100) {
+  
+  # Create train and test
+  inds <- sample(1:nrow(ad),size = round(nrow(ad)*.8),replace = F)
+  
+  train <- ad %>% slice(inds)
+  test <- ad %>% slice(-inds)
+  
+  m1 <- glm(formula = form1,data = train,family = binomial(link = "logit"))
+  m2 <- glm(formula = form2,data = train,family = binomial(link = "logit"))
+  
+  # Evaluate based on full data
+  toEval <- test %>%
+    mutate(prob1 = predict(m1,newdata = test,type = 'response'),
+           prob2 = predict(m2,newdata = test,type = 'response'),
+           yield = factor(yield,levels = c('1','0')))
+  
+  tmpRes1 <- roc_auc(toEval,'yield','prob1') %>%
+    mutate(model = 'formula_1')
+  tmpRes2 <- roc_auc(toEval,'yield','prob2') %>%
+                mutate(model = 'formula_2')
+  
+  cvRes <- cvRes %>%
+    bind_rows(tmpRes1,tmpRes2)
+}
+
+cvRes %>%
+  group_by(model) %>%
+  summarise(meanAUC = mean(.estimate))
+
+# You could visualize
+cvRes %>%
+  ggplot(aes(x = .estimate,fill = model)) + 
+  geom_density(alpha = .3)
+
+```
