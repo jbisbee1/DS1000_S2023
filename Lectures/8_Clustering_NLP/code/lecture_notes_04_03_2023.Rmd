@@ -1,0 +1,287 @@
+---
+title: "Clustering"
+output: html_document
+date: "2023-04-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Iris Clustering
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(janitor)
+```
+
+## Loading the data set
+
+```{r}
+dat <- iris %>% clean_names()
+  
+```
+
+```{r}
+head(dat)
+```
+
+```{r}
+glimpse(dat)
+
+```
+
+```{r}
+unique(dat$species)
+```
+
+```{r}
+dat <- dat %>% 
+  filter(species != "virginica") %>% 
+  mutate(species_int = ifelse(species == "setosa", 0,1)) %>% 
+  select(sepal_length, sepal_width, species, species_int)
+```
+
+## Supervised vs Unsupervised Learning
+
+### Supervised Learning - Classification (Logistic Regression)
+
+```{r}
+inds <- sample(1:nrow(dat),size = round(nrow(dat)*.7),replace = F)
+train <- dat %>% slice(inds)
+test <- dat %>% slice(-inds)
+mLG <- glm(factor(species) ~ sepal_length + sepal_width,family = binomial(link = 'logit'), data = train)
+
+test <- test %>% 
+  mutate(proba = predict(mLG, newdata = test, type = "response"),
+         pred = ifelse(proba > 0.5,1,0),
+         truth = factor(species_int,levels = c('1','0')))
+
+test
+```
+```{r}
+table(test$species_int, test$pred)
+
+roc_auc(test,truth = 'truth',estimate = 'pred') 
+```
+
+```{r}
+ggplot(test) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = truth)) +
+  labs(title = "Sepal Width vs Sepal Length", x = "Sepal Length", y = "Sepal Width")
+  
+```
+
+### Unsupervised Learning - Clustering (K-Means Clustering)
+
+```{r}
+datClust <- dat %>% 
+  select(-species, -species_int)
+datClust
+```
+
+```{r}
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width)) +
+  labs(title = "Sepal Width vs Sepal Length")
+```
+
+
+  - `x` is the data (only select the columns of interest!)
+  
+  - `centers` is the number of centroids
+  
+  - `iter.max` maximum amount of "steps"
+  
+  - `nstart` how many times to re-estimate
+  
+### With 2 clusters
+
+```{r}
+m2 <- kmeans(datClust, centers = 2,nstart = 10)
+m2
+```
+
+```{r}
+datClust <- datClust %>% 
+  mutate(m2cluster = factor(m2$cluster))
+
+cents <- data.frame(m2$centers)
+
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = m2cluster)) +
+  geom_point(data = cents, aes(x = sepal_length,y = sepal_width),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Sepal Width vs Sepal Length")
+```
+
+```{r}
+tidy(m2)
+sum(tidy(m2)$withinss)
+```
+
+### With 3 clusters
+
+```{r}
+m3 <- kmeans(datClust, centers = 3,nstart = 10)
+m3
+```
+
+```{r}
+datClust <- datClust %>% 
+  mutate(m3cluster = factor(m3$cluster))
+
+cents3 <- data.frame(m3$centers)
+
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = m3cluster)) +
+  geom_point(data = cents3, aes(x = sepal_length,y = sepal_width),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Sepal Width vs Sepal Length")
+```
+```{r}
+tidy(m3)
+sum(tidy(m3)$withinss)
+```
+
+
+### With 4 clusters
+
+```{r}
+m4 <- kmeans(datClust, centers = 4,nstart = 10)
+m4
+```
+
+```{r}
+datClust <- datClust %>% 
+  mutate(m4cluster = factor(m4$cluster))
+
+cents4 <- data.frame(m4$centers)
+
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = m4cluster)) +
+  geom_point(data = cents4, aes(x = sepal_length,y = sepal_width),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Sepal Width vs Sepal Length")
+```
+
+```{r}
+tidy(m4)
+sum(tidy(m4)$withinss)
+```
+
+
+```{r}
+totWSS <- NULL
+for(k in 1:10) {
+  m.cluster <- datClust %>% select(contains("sepal")) %>% kmeans(centers = k,nstart = 10)
+  totWSS <- data.frame(totWSS = m.cluster$tot.withinss,k = k) %>%
+    bind_rows(totWSS)
+}
+```
+
+#### Choosing the right "ELBOW"
+
+```{r}
+totWSS %>%
+  ggplot(aes(x = k,y = totWSS)) + 
+  geom_line() + geom_point() + 
+  labs(x = 'Number of Clusters',y = 'Total WSS') + 
+  scale_x_continuous(breaks = 1:10)
+```
+
+```{r}
+datClust <- datClust %>% 
+  mutate(species = dat$species)
+
+```
+
+```{r}
+cents <- data.frame(m2$centers)
+
+ggClust <- ggplot(datClust, aes(x = sepal_length, y = sepal_width, color = m2cluster, text = species)) +
+  geom_point() +
+  labs(title = "Sepal Width vs Sepal Length")
+
+ggplotly(ggClust,tooltip = 'text')
+```
+
+### New Data
+
+```{r}
+hw <- read_csv("https://raw.githubusercontent.com/MUbarak123-56/DataBEL/master/SOCR-HeightWeight.csv") %>%  clean_names()
+```
+
+```{r}
+glimpse(hw)
+```
+
+```{r}
+head(hw)
+```
+
+```{r}
+inds <- sample(1:nrow(hw),size = round(nrow(hw)*.1),replace = F)
+hw_new <- hw %>% slice(inds)
+```
+
+```{r}
+ggplot(hw_new) +
+  geom_point(aes(x = height_inches, y= weight_pounds)) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight")
+```
+
+```{r}
+totWSS <- NULL
+for(k in 1:10) {
+  m.cluster <- hw_new %>% select(height_inches, weight_pounds) %>%  kmeans(centers = k,nstart = 10)
+  totWSS <- data.frame(totWSS = m.cluster$tot.withinss,k = k) %>%
+    bind_rows(totWSS)
+}
+```
+
+```{r}
+totWSS %>%
+  ggplot(aes(x = k,y = totWSS)) + 
+  geom_line() + geom_point() + 
+  labs(x = 'Number of Clusters',y = 'Total WSS') + 
+  scale_x_continuous(breaks = 1:10)
+```
+
+```{r}
+m2 <- kmeans(hw_new %>%  select(height_inches, weight_pounds), centers = 2)
+tidy(m2)
+```
+
+```{r}
+hw_new <- hw_new %>% 
+  mutate(cluster = factor(m2$cluster))
+
+cents <- data.frame(m2$centers)
+
+ggplot(hw_new) + 
+  geom_point(aes(x = height_inches, y = weight_pounds, color = cluster)) +
+  geom_point(data = cents, aes(x = height_inches,y = weight_pounds),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight") 
+```
+
+```{r}
+m3 <- kmeans(hw_new %>%  select(height_inches, weight_pounds), centers = 3)
+tidy(m3)
+```
+
+```{r}
+hw_new <- hw_new %>% 
+  mutate(cluster3 = factor(m3$cluster))
+
+cents <- data.frame(m3$centers)
+
+ggplot(hw_new) + 
+  geom_point(aes(x = height_inches, y = weight_pounds, color = cluster3)) +
+  geom_point(data = cents, aes(x = height_inches,y = weight_pounds),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight")
+```
+
