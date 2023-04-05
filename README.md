@@ -376,15 +376,15 @@ Lecture Content (2023/04/03): Clustering - *k*-means clustering
 
 Lecture Content (2023/04/05): NLP Part 1 - *k*-means clustering on text
 
-* Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/8_Clustering_NLP/code/Clustering_NLP_part2_slides.html#1)
+* Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_part2_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/8_Clustering_NLP/code/Clustering_NLP_part2_slides.html#1)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2777344/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_04_05_2023.Rmd)
-* Homework (due 2023/04/10): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part2_hw.Rmd)
+* Homework (due 2023/04/10): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_part2_hw.Rmd)
 
 Lecture Content (2023/04/10): NLP Part 2 - Sentiment analysis
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/8_Clustering_NLP/code/Clustering_NLP_part3_slides.html#1)
-* Homework (due 2023/04/17): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part3_hw.Rmd)
+* Homework (due 2023/04/17): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_part3_hw.Rmd)
 * **Problem Set 9 (due 2023-04-14 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/ds1000_problem_set_9.Rmd)
 
 **Review Session (2023/04/12): Review of Clustering section.**
