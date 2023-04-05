@@ -1,0 +1,304 @@
+---
+title: "Clustering Code Along"
+output: html_document
+date: "2023-04-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(janitor)
+```
+
+
+```{r}
+data <- iris %>%  clean_names()
+data
+```
+
+```{r}
+unique(data$species)
+```
+
+```{r}
+dat <- data %>% 
+  filter(species != "virginica") %>% 
+  mutate(species_int = ifelse(species == "setosa", 0,1)) %>% 
+  select(sepal_length, sepal_width, species, species_int)
+```
+
+```{r}
+inds <- sample(1:nrow(dat),size = round(nrow(dat)*.7),replace = F)
+train <- dat %>% slice(inds)
+test <- dat %>% slice(-inds)
+```
+
+```{r}
+mLG <- glm(factor(species) ~ sepal_length + sepal_width, 
+           family = binomial(link = "logit"),
+           data = train)
+
+clas_test <- test %>% 
+  mutate(proba = predict(mLG, newdata = test, type = "response"),
+         pred = ifelse(proba > 0.5, 1, 0),
+         truth = factor(species_int, levels = c("1", "0"))) %>% 
+  select(species, sepal_length, sepal_width, prob=proba, pred, truth)
+
+clas_test
+  
+```
+
+```{r}
+table(clas_test$truth, clas_test$pred) 
+```
+
+```{r}
+roc_auc(clas_test,truth = 'truth',estimate = 'pred')
+```
+```{r}
+ggplot(clas_test) +
+  geom_point(aes(x= sepal_length, y = sepal_width, color = truth)) +
+  labs(title = "Sepal Width vs Sepal Length", x = "Sepal Length", y = "Sepal Width")
+```
+
+```{r}
+clust_test <- test %>% 
+  select(-species, truth = species_int) %>% 
+  mutate(method = "Clustering")
+clust_test
+```
+```{r}
+set.seed(123)
+m2 <- kmeans(clust_test %>% select(-method, -truth), centers = 2, nstart =10)
+```
+
+```{r}
+m2
+```
+
+```{r}
+ tidy(m2)
+```
+
+```{r}
+clust_test$class <- factor(m2$cluster-1)
+clust_test
+```
+
+```{r}
+clust_test %>%
+  ggplot(aes(x = sepal_length, y = sepal_width, color=class)) +
+  geom_point() +
+  geom_point(data=data.frame(m2$centers),
+             aes(x=sepal_length, y=sepal_width),
+             inherit.aes = F, shape = '+',size = 10)
+  labs(title = "Sepal Width vs Sepal Length")
+```
+
+```{r}
+sum(tidy(m2)$withinss)
+```
+
+```{r}
+facet_clas_test <- clas_test %>%
+  select(sepal_length, sepal_width, class=pred) %>%
+  mutate(method="Classification", class=factor(class))
+
+comparison = bind_rows(facet_clas_test, clust_test)
+
+comparison %>%
+  ggplot(aes(x=sepal_length, y=sepal_width, color=class)) +
+  geom_point() +
+  facet_wrap(~method)
+```
+
+```{r}
+table(clust_test$truth, clust_test$class)
+
+```
+
+Trying to split into three clusters
+
+```{r}
+datClust <- data %>%
+  select(species, sepal_length, sepal_width) %>%
+  mutate(truth = ifelse(species=="setosa", 1,
+                        ifelse(species=="versicolor", 2, 3)))
+m3 <- kmeans(datClust%>%select(-species, -truth), centers = 3,nstart = 10)
+m3
+```
+```{r}
+tidy(m3)
+```
+
+```{r}
+datClust <- datClust %>% 
+  mutate(m3cluster = factor(m3$cluster))
+
+cents3 <- data.frame(m3$centers)
+
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = m3cluster)) +
+  geom_point(data = cents3, aes(x = sepal_length,y = sepal_width),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Sepal Width vs Sepal Length")
+```
+
+```{r}
+sum(tidy(m3)$withinss)
+```
+
+```{r}
+table(datClust$truth, datClust$m3cluster)
+```
+
+```{r}
+datClust <- data %>%
+  select(species, contains("sepal"), contains("petal")) %>%
+  mutate(truth = ifelse(species=="setosa", 1,
+                        ifelse(species=="versicolor", 2, 3)))
+m3 <- kmeans(datClust%>%select(-species, -truth), centers = 3,nstart = 10)
+m3
+```
+
+```{r}
+tidy(m3)
+```
+
+```{r}
+sum(tidy(m3)$withinss)
+
+```
+```{r}
+datClust <- datClust %>% 
+  mutate(m3cluster = m3$cluster)
+table(datClust$truth, datClust$m3cluster)
+```
+
+```{r}
+datClust <- data %>%
+  select(species, sepal_length, sepal_width) %>%
+  mutate(truth = ifelse(species=="setosa", 1,
+                        ifelse(species=="versicolor", 2, 3)))
+m4 <- kmeans(datClust%>%select(-species, -truth), centers = 4,nstart = 10)
+m4
+```
+```{r}
+datClust <- datClust %>% 
+  mutate(m4cluster = factor(m4$cluster))
+
+cents4 <- data.frame(m4$centers)
+
+ggplot(datClust) +
+  geom_point(aes(x = sepal_length, y = sepal_width, color = m4cluster)) +
+  geom_point(data = cents4, aes(x = sepal_length,y = sepal_width),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Sepal Width vs Sepal Length")
+
+```
+
+```{r}
+tidy(m4)
+```
+
+```{r}
+sum(tidy(m4)$withinss)
+
+```
+
+```{r}
+totWSS <- NULL
+for(k in 1:10) {
+  m.cluster <- datClust %>% select(contains("sepal")) %>% kmeans(centers = k,nstart = 10)
+  totWSS <- data.frame(totWSS = m.cluster$tot.withinss,k = k) %>%
+    bind_rows(totWSS)
+}
+```
+
+```{r}
+totWSS %>%
+  ggplot(aes(x = k,y = totWSS)) + 
+  geom_line() + geom_point() + 
+  labs(x = 'Number of Clusters',y = 'Total WSS') + 
+  scale_x_continuous(breaks = 1:10)
+```
+
+```{r}
+hw <- read_csv("https://raw.githubusercontent.com/MUbarak123-56/DataBEL/master/SOCR-HeightWeight.csv") %>%  clean_names()
+```
+
+
+```{r}
+hw
+```
+
+```{r}
+inds <- sample(1:nrow(hw),size = round(nrow(hw)*.1),replace = F)
+hw_new <- hw %>% slice(inds)
+```
+
+```{r}
+ggplot(hw_new) +
+  geom_point(aes(x = height_inches, y= weight_pounds)) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight")
+```
+
+```{r}
+totWSS <- NULL
+for(k in 1:10) {
+  m.cluster <- hw_new %>% select(height_inches, weight_pounds) %>%  kmeans(centers = k,nstart = 10)
+  totWSS <- data.frame(totWSS = m.cluster$tot.withinss,k = k) %>%
+    bind_rows(totWSS)
+}
+```
+
+```{r}
+totWSS %>%
+  ggplot(aes(x = k,y = totWSS)) + 
+  geom_line() + geom_point() + 
+  labs(x = 'Number of Clusters',y = 'Total WSS') + 
+  scale_x_continuous(breaks = 1:10)
+```
+
+```{r}
+m2 <- kmeans(hw_new %>%  select(height_inches, weight_pounds), centers = 2)
+tidy(m2)
+```
+
+```{r}
+hw_new <- hw_new %>% 
+  mutate(cluster = factor(m2$cluster))
+
+cents <- data.frame(m2$centers)
+
+ggplot(hw_new) + 
+  geom_point(aes(x = height_inches, y = weight_pounds, color = cluster)) +
+  geom_point(data = cents, aes(x = height_inches,y = weight_pounds),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight")
+```
+
+```{r}
+m3 <- kmeans(hw_new %>%  select(height_inches, weight_pounds), centers = 3)
+tidy(m3)
+```
+
+```{r}
+hw_new <- hw_new %>% 
+  mutate(cluster3 = factor(m3$cluster))
+
+cents <- data.frame(m3$centers)
+
+ggplot(hw_new) + 
+  geom_point(aes(x = height_inches, y = weight_pounds, color = cluster3)) +
+  geom_point(data = cents, aes(x = height_inches,y = weight_pounds),
+             inherit.aes = F,shape = '+',size = 10) +
+  labs(title = "Weight vs Height", x = "Height", y = "Weight")
+```
+
