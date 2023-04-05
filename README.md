@@ -371,7 +371,7 @@ Lecture Content (2023/04/03): Clustering - *k*-means clustering
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part1_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/8_Clustering_NLP/code/Clustering_NLP_part1_slides.html#1)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2774715/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_04_03_2023.Rmd)
-* Homework (due 2023/04/05): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_NLP_part1_hw.Rmd)
+* Homework (due 2023/04/05): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_part1_hw.Rmd)
 * **Problem Set 8 (due 2023-04-07 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_PS8.Rmd)
 
 Lecture Content (2023/04/05): NLP Part 1 - *k*-means clustering on text
