@@ -323,7 +323,8 @@ Lecture Content (2023/02/27): Regression Part 3 - Multiple regression and catego
 * Previous Midterm: [F2022](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_F2022_midterm_exam_AK.pdf)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2749907/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/midterm_review_notes.Rmd)
-* [Midterm Exam](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_midterm.Rmd)
+* [Midterm Exam](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/6_Midterm/code/DS1000_midterm.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/_Midterm/code/DS1000_midterm_AK.Rmd)
+
 
 **Midterm Exam (2023/03/08)**: Assigned 2023/03/06, due 2023/03/10 by 11:59PM to Brightspace.
 
@@ -341,7 +342,7 @@ Lecture Content (2023/03/20): Classification Part 1 - The concept of a logistic 
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2760407/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_20_2023.Rmd)
 * Homework (due 2023/03/22): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_parts_1_and_2_hw.Rmd)
-* **Problem Set 6 (due 2023-03-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS6.Rmd)
+* **Problem Set 6 (due 2023-03-24 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS6.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS6_AK.Rmd)
 
 Lecture Content (2023/03/22): Classification Part 2 - Interpreting model output and evaluating performance
 
@@ -355,7 +356,7 @@ Lecture Content (2023/03/27): Classification Part 3 - Using models for predictio
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_part3_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/7_Classification/code/Classification_part3_slides.html#1)
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2767992/View)
 * In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/lecture_notes_03_27_2023.Rmd)
-* **Problem Set 7 (due 2023-03-31 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS7.Rmd)
+* **Problem Set 7 (due 2023-03-31 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS7.Rmd); [AK](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/7_Classification/code/Classification_PS7_AK.Rmd)
 
 **Review Session (2023/03/29): Review of Classification section.**
 * [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2770682/View)
