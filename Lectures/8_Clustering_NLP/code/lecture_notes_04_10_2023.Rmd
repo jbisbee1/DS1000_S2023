@@ -1,0 +1,111 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Quiz 18 Password: 1531
+
+# Getting started
+
+```{r}
+require(tidyverse)
+tweet_words <- readRDS(file="../data/Trump_tweet_words.Rds")
+tweet_words <- tweet_words %>% mutate(PostPresident = Tweeting.date > as.Date('2016-11-06'))
+
+counts <- tweet_words %>%
+  count(word)
+
+counts %>%
+  arrange(desc(n))
+```
+
+# Creating DTM
+
+```{r}
+dtm <- tweet_words %>%
+  count(document,word)
+
+dtm
+
+# Define day as a document instead
+
+dtm <- tweet_words %>%
+  count(Tweeting.date,word) %>%
+  group_by(word) %>%
+  mutate(tot_n = n()) %>%
+  ungroup()
+
+dtm <- dtm %>%
+  filter(tot_n > 20)
+
+# Bisbee hates word clouds
+library(wordcloud)
+wordcloud(words = dtm$word,
+          freq = dtm$n,
+          max.words = 200,
+          random.order=FALSE, 
+          rot.per=0.35)
+```
+
+# TF-IDF
+
+```{r}
+require(tidytext)
+require(tm)
+
+dtm.tfidf <- bind_tf_idf(tbl = dtm,term = word,document = Tweeting.date,n = n)
+
+castdtm <- cast_dtm(data = dtm.tfidf,document = Tweeting.date,term = word,value = tf_idf)
+
+set.seed(42)
+km_out <- kmeans(castdtm,center = 50,nstart = 5)
+
+km_out_tidy <- tidy(km_out) %>%
+  gather(word,mean_tfidf,-size,-cluster,-withinss) %>% # Convert to long data
+  mutate(mean_tfidf = as.numeric(mean_tfidf))
+
+
+```
+
+# Visualizing the output
+
+```{r}
+km_out_tidy %>%
+  filter(cluster %in% 1:9) %>%
+  group_by(cluster) %>%
+  arrange(desc(mean_tfidf)) %>%
+  slice(1:10) %>%
+  ggplot(aes(x = mean_tfidf,y = reorder(word,mean_tfidf))) + 
+  geom_bar(stat = 'identity') + 
+  facet_wrap(~cluster,scales = 'free')
+```
+
+# Choosing the optimal number of clusters
+
+```{r}
+
+km_out <- kmeans(castdtm,center = 50,nstart = 5)
+km_out$tot.withinss
+
+elbow_plot <- NULL # Instantiate empty object to save results
+for(i in c(2,5,10,30,50,100,200,500)) { # Loop over different choices of k
+  km_out <- kmeans(castdtm,center = i,nstart = 5) # Calculate k-means with number of clusters = to i
+  elbow_plot <- elbow_plot %>% # Add to the elbow_plot empty object
+    bind_rows(data.frame(totwss = km_out$tot.withinss,
+             clusters = i))
+  print(i)
+}
+
+
+elbow_plot %>%
+  ggplot(aes(x = clusters ,y = totwss)) + 
+  geom_point() + 
+  geom_line()
+```
