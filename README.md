@@ -400,11 +400,10 @@ Lecture Content (2023/04/10): NLP Part 2 - Sentiment analysis
 
 ### 9\. Advanced Topics in Data Science
 
-Lecture Content (2023/04/17): Random forests, neural networks, image-as-data
+Lecture Content (2023/04/17): Random forests, LASSO, mapping
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/9_Advanced_Topics/code/Advanced_Topics_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/9_Advanced_Topics/code/Advanced_Topics_slides.html#1)
-* Homework (due 2023/04/19): [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/9_Advanced_Topics/code/Advanced_Topics_hw.Rmd)
-* **Problem Set 9 (due 2023-04-21 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/ds1000_problem_set_9.Rmd)
+* **Problem Set 9 (due 2023-04-21 by 11:59PM):** [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/code/Clustering_PS9.Rmd)
 
 
 Lecture Content (2023/04/19): Ethics in data science
@@ -417,7 +416,7 @@ Lecture Content (2023/04/19): Ethics in data science
 
 **Review Session (2023/04/24): Review of second half of semester.**
 
-**Final Exam (2023/04/26)**
+* Final exam (due 2023-04-28 by 11:59PM)
 
 *[Back to ToC](#table-of-contents)*
 
