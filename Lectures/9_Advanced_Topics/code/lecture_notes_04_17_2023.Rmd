@@ -1,0 +1,134 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-04-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+covidData <- read_rds('https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/9_Advanced_Topics/data/covid_prepped.Rds?raw=true')
+```
+
+# RQ:
+
+- What predicts Covid-19 death rate by county?
+
+- Start with saving different formulae for efficiency's sake
+
+```{r}
+form.demogs <- 'covid.death.rate ~ perc.65up + perc.male + perc.non.hisp.white + perc.non.hisp.black + perc.non.hisp.asian + perc.hispanic + log.pop'
+
+form.econ <- 'covid.death.rate ~ perc.65up + perc.male + perc.non.hisp.white + perc.non.hisp.black + perc.non.hisp.asian + perc.hispanic + log.pop + lfpr + weekly.wages + unemp.rate + perc.manuf + perc.rural'
+
+form.pol <- 'covid.death.rate ~ perc.65up + perc.male + perc.non.hisp.white + perc.non.hisp.black + perc.non.hisp.asian + perc.hispanic + log.pop + lfpr + weekly.wages + unemp.rate + perc.manuf + perc.rural + perc.trump.2016'
+```
+
+- Now run a standard linear regression model
+
+```{r}
+m.demog <- lm(formula = form.demogs,data = covidData)
+summary(m.demog)
+m.econ <- lm(formula = form.econ,data = covidData)
+m.pol <- lm(formula = form.pol,data = covidData)
+
+summary(m.econ)
+summary(m.pol)
+```
+
+# Cross validation
+
+```{r}
+cvRes <- NULL
+for(i in 1:100) {
+  # 1: create random indices
+  inds <- sample(1:nrow(covidData),size = round(nrow(covidData)*.8),replace = F)
+  
+  # 2: create train and test datasets
+  train <- covidData %>% slice(inds)
+  test <- covidData %>% slice(-inds)
+  
+  # 3: train regressions
+  tmp.demog <- lm(formula = form.demogs,data = train) # train each model
+  tmp.econ <- lm(formula = form.econ,data = train)
+  tmp.pol <- lm(formula = form.pol,data = train)
+  
+  # 4: predict on the test data
+  cvRes <- cvRes %>%
+    bind_rows(test %>%
+    mutate(pred.demog = predict(tmp.demog,newdata = test), # predict the model on the test data
+           pred.econ = predict(tmp.econ,newdata = test),
+           pred.pol = predict(tmp.pol,newdata = test)) %>%
+    summarise(rmse.demog = sqrt(mean((covid.death.rate - pred.demog)^2)), # calculate RMSE in a single line
+              rmse.econ = sqrt(mean((covid.death.rate - pred.econ)^2)),
+              rmse.pol = sqrt(mean((covid.death.rate - pred.pol)^2))) %>%
+    mutate(cvIndex = i))
+}
+
+cvRes %>%
+  summarise_all(mean)
+```
+# Random Forest
+
+```{r}
+require(ranger)
+m.rf.demog <- ranger(formula = form.demogs,data = covidData) # estimate a random forest using the demographic data only
+
+m.rf.demog
+
+preds <- predict(m.rf.demog,data = covidData)
+preds$predictions
+```
+
+# RF Comparison
+
+```{r}
+cvRes <- NULL
+for(i in 1:100) {
+  # 1: create random indices
+  inds <- sample(1:nrow(covidData),size = round(nrow(covidData)*.8),replace = F)
+  
+  # 2: create train and test datasets
+  train <- covidData %>% slice(inds)
+  test <- covidData %>% slice(-inds)
+  
+  # 3: train regressions
+  tmp.demog <- lm(formula = form.demogs,data = train) # train each model
+
+  # Add in the random forest method here
+  rf.demog <- ranger(formula = form.demogs,data = train)
+  
+  tmp.pred.rf <- predict(rf.demog,data = test)
+
+  # 4: predict on the test data
+  cvRes <- cvRes %>%
+    bind_rows(test %>%
+    mutate(pred.demog.lm = predict(tmp.demog,newdata = test),
+           pred.demog.rf = tmp.pred.rf$predictions) %>%
+    summarise(rmse.lm = sqrt(mean((covid.death.rate - pred.demog.lm)^2)), 
+              rmse.rf = sqrt(mean((covid.death.rate - pred.demog.rf)^2))) %>%
+    mutate(cvIndex = i))
+}
+
+cvRes %>%
+  summarise_all(mean)
+```
+
+# Variable Importance
+
+```{r}
+m.ranger <- ranger(formula = form.pol,data = covidData,importance = 'permutation')
+
+m.ranger$variable.importance
+
+```
+
+
+
+
+
