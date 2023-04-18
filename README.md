@@ -60,7 +60,7 @@ You are encouraged to adopt the following workflow for this class:
 
 Given the nature of the material, as well as the size of the class, participation is not part of your grade. Instead, you will be assigned weekly problem sets beginning with Topic 3 which will test your ability to apply what you've learned in class, and to think creatively about your own data science ideas. These problem sets are assigned on the Monday of each week and are due by **11:59PM Nashville time the following Friday**. You are welcome to collaborate on these problem sets, and are encouraged to ask questions on the **Class feed** on `Campuswire`.
 
-There are also two exams. The first is a mid-term exam that is scheduled for March 8th (Wednesday) and will take place in class. The preceding Monday (March 6th) will be an optional review session, where you should come prepared with questions. The second exam is a cumulative final that is scheduled for April 26th.
+There are also two exams. The first is a mid-term exam that is scheduled for March 8th (Wednesday) and will take place in class. The preceding Monday (March 6th) will be an optional review session, where you should come prepared with questions. The second exam is a cumulative final that is scheduled for April 24th and is due on April 28th by midnight.
 
 The final grade is calculated as a weighted average of these components with the following weights:
 
