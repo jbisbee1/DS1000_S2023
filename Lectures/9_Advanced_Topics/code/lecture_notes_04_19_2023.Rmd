@@ -1,0 +1,46 @@
+---
+title: "Lecture Notes"
+author: "Prof. Bisbee, Vanderbilt University"
+date: "2023-04-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+require(tidytext)
+
+tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/data/Trump_tweet_words.Rds?raw=true")
+nrc <- get_sentiments("nrc")
+# OR
+nrc <- read_rds(file = 'https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/data/nrc.Rds?raw=true')
+
+# Merging with inner join
+tweet_sentiment <- tweet_words %>%
+    inner_join(nrc, by = "word")
+
+
+# Look only at joyful and sad tweets 
+tweet_analysis <- tweet_sentiment %>%
+  filter(sentiment %in% c('sadness','joy')) %>%
+  count(document,sentiment,retweets) %>%
+  spread(sentiment,n,fill = 0) %>%
+  mutate(net_joy = joy - sadness) %>%
+  mutate(joy_categorical = ifelse(net_joy < 0,'Sad',
+                                  ifelse(net_joy > 0,'Joyful','Neutral')))
+
+# Predict retweets as a function of sentiment
+m <- lm(retweets ~ net_joy,tweet_analysis)
+summary(m)
+
+```
+
+
+# Quiz password: 9231
+
+
+
+

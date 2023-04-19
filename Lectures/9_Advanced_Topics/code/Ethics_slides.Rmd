@@ -117,14 +117,7 @@ background-size: 95%
 
 --
 
-  - .red[Data] .blue[Science] is the study of **readymade** data
-  
---
-
-- An example:
-
 <iframe width="900" height="600" src="https://james-bisbee.shinyapps.io/shiny_chord/" frameborder="0"></iframe>
-%<center><img src="figs/twitter.png" width=60%></center>
 
 
 ---
@@ -831,6 +824,12 @@ background-size: 95%
 > “Identifying links between facial features and psychological traits by employing methodology similar to the one used here could boost our understanding of the origins and nature of a broad range of psychological traits, preferences, and psychological processes” -- [Wang & Kosinski](https://psycnet.apa.org/fulltext/2018-03783-002.pdf?auth_token=571b81d82fbc15105c730cae3e02da05e69f0e36), 2018
 
 <center><img src="figs/skull.png" width="80%"></center>
+
+---
+
+# Going forward
+
+<center><img src="https://www.klippa.com/wp-content/uploads/2023/01/ChatGPT-preview.jpg" width = "80%"></center>
 
 
 ---

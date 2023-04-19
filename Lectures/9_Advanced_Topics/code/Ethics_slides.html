@@ -4,7 +4,7 @@
     <title>Ethics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ]
 .date[
 ### Lecture Date: 2023/04/19
-Slides Updated: 2023-04-18
+Slides Updated: 2023-04-19
 ]
 
 ---
@@ -122,14 +122,7 @@ background-size: 95%
 
 --
 
-  - .red[Data] .blue[Science] is the study of **readymade** data
-  
---
-
-- An example:
-
 &lt;iframe width="900" height="600" src="https://james-bisbee.shinyapps.io/shiny_chord/" frameborder="0"&gt;&lt;/iframe&gt;
-%&lt;center&gt;&lt;img src="figs/twitter.png" width=60%&gt;&lt;/center&gt;
 
 
 ---
@@ -837,6 +830,12 @@ background-size: 95%
 
 &lt;center&gt;&lt;img src="figs/skull.png" width="80%"&gt;&lt;/center&gt;
 
+---
+
+# Going forward
+
+&lt;center&gt;&lt;img src="https://www.klippa.com/wp-content/uploads/2023/01/ChatGPT-preview.jpg" width = "80%"&gt;&lt;/center&gt;
+
 
 ---
 
@@ -869,7 +868,13 @@ background-size: 95%
 ```r
 require(tidyverse)
 require(tidytext)
+```
 
+```
+## Warning: package 'tidytext' was built under R version 4.2.2
+```
+
+```r
 tweet_words &lt;- read_rds(file="https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/8_Clustering_NLP/data/Trump_tweet_words.Rds?raw=true")
 nrc &lt;- get_sentiments("nrc")
 
@@ -934,19 +939,19 @@ summary(lm(log(retweets+1) ~ net_joy,data = sentimentAnalysis))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.8825 -2.5852 -0.1687  2.7888  7.0068 
+## -6.8733 -2.5793 -0.1745  2.8016  6.9102 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  6.41751    0.02042  314.35   &lt;2e-16 ***
-## net_joy     -0.46497    0.01512  -30.75   &lt;2e-16 ***
+## (Intercept)  6.42345    0.02037  315.35   &lt;2e-16 ***
+## net_joy     -0.44986    0.01505  -29.89   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  
 ## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.838 on 19833 degrees of freedom
-## Multiple R-squared:  0.0455,	Adjusted R-squared:  0.04545 
-## F-statistic: 945.3 on 1 and 19833 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 2.84 on 20019 degrees of freedom
+## Multiple R-squared:  0.04273,	Adjusted R-squared:  0.04268 
+## F-statistic: 893.6 on 1 and 20019 DF,  p-value: &lt; 2.2e-16
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
