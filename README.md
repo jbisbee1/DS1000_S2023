@@ -411,6 +411,8 @@ Lecture Content (2023/04/17): Random forests, LASSO, mapping
 Lecture Content (2023/04/19): Ethics in data science
 
 * Slides: [PDF](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/9_Advanced_Topics/code/Ethics_slides.pdf); [HTML](https://www.jamesbisbee.com/DS1000_S2023/Lectures/9_Advanced_Topics/code/Ethics_slides.html#1)
+* [Recording](https://brightspace.vanderbilt.edu/d2l/le/content/403347/viewContent/2787774/View)
+* In-Class Notes: [RMD](https://github.com/jbisbee1/DS1000_S2023/blob/main/Lectures/9_Advanced_Topics/code/lecture_notes_04_19_2023.Rmd)
 
 *[Back to ToC](#table-of-contents)*
 
