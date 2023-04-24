@@ -1,0 +1,53 @@
+---
+title: "Review Notes"
+output: html_document
+date: "2023-04-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# 8:45 - 8:55: Take five minutes to fill out course eval (Brightspace)
+
+# 9:00 - 9:30: Review of skew / measurement
+
+# 9:30 - 10:00: Review of exam / final grades
+
+
+```{r}
+require(tidyverse)
+covidData <- read_rds(file="../data/covid_prepped.Rds")
+```
+
+```{r}
+covidData %>%
+  ggplot(aes(x = population))  + 
+  geom_histogram()
+
+m1 <- lm(formula = log(trump.votes+1) ~ log(covid.deaths+1), covidData)
+
+summary(m1)
+
+m2 <- lm(formula = perc.trump.2020 ~ covid.deaths,covidData)
+summary(m2)
+
+mBig <- lm(formula = perc.trump.2020 ~ covid.deaths,
+           data = covidData %>%
+             filter(population > 1000000))
+
+summary(mBig)
+
+mSmall <- lm(formula = perc.trump.2020 ~ covid.deaths,
+           data = covidData %>%
+             filter(population < 500))
+
+summary(mSmall)
+
+mRate <- lm(formula = perc.trump.2020 ~ perc.covid.deaths,
+            data = covidData %>%
+              mutate(perc.covid.deaths = covid.deaths*1000 / population))
+
+summary(mRate)
+```
