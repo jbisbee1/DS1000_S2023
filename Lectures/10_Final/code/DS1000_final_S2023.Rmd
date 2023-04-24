@@ -44,6 +44,7 @@ Require `tidyverse` and load the [`covid_prepped.Rds`](https://github.com/jbisbe
 
 
 ```{r}
+set.seed(123)
 # INSERT CODE HERE
 ```
 
